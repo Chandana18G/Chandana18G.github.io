@@ -1,9 +1,51 @@
-// Content for the About page. Edit freely — this is plain data.
+// Content for the About page (and the Experience section on the home page).
+// Edit freely — this is plain data.
 
 export const bio: string[] = [
-  "I'm Chandana, an M.Sc. student in Applied Data Science & AI at SRH University's Munich campus. I live in Regensburg, Bavaria, and grew up in Mysuru, India.",
-  'I like problems where data meets a real decision: forecasting energy prices, anticipating clinical needs, or helping someone find the right answer in a pile of documents. I care about models that are useful, explainable and responsibly built, not just accurate on a benchmark.',
-  "I'm looking for a working-student role (Werkstudent) in Regensburg or remote, in an industry team working on data science, machine learning or applied generative AI.",
+  "I'm Chandana, an M.Sc. student in Applied Data Science & AI at SRH University (Munich campus), based in Regensburg, Bavaria. I grew up in Mysuru, India, where I studied computer science.",
+  'I build machine-learning systems end to end: from messy public data to a model that is honestly evaluated and a tool someone can use. My recent work covers NLP and semantic search, retrieval-augmented generation (RAG) and time-series forecasting.',
+  "I'm looking for a working-student role (Werkstudent) in data science, machine learning or applied generative AI, in Regensburg or remote.",
+];
+
+export interface ExperienceItem {
+  role: string;
+  company: string;
+  location: string;
+  period: string;
+  points: string[];
+}
+
+export const experience: ExperienceItem[] = [
+  {
+    role: 'Operations Associate (part-time)',
+    company: 'Flink SE',
+    location: 'Germany',
+    period: '2024 – 2025',
+    points: [
+      'Order fulfilment and goods receipt (delivery checks, sorting, inventory records) in a fast-paced quick-commerce team.',
+      'Reliable shift work alongside studies, meeting daily order and delivery targets.',
+    ],
+  },
+  {
+    role: 'Data Science Intern',
+    company: 'TechnoTut',
+    location: 'Mysuru, India',
+    period: 'Feb 2025 – May 2025',
+    points: [
+      'Built and evaluated supervised and unsupervised ML models in Python for real-world analytical use cases.',
+      'Did exploratory analysis, feature engineering and model benchmarking across multiple datasets.',
+      'Presented results to technical and non-technical stakeholders.',
+    ],
+  },
+  {
+    role: 'Data Analysis Trainee',
+    company: 'SPORTS-KPI',
+    location: 'India',
+    period: 'Sep 2023 – Oct 2023',
+    points: [
+      'Built KPI dashboards and reports for football and kabaddi match data, from raw data to visual delivery.',
+    ],
+  },
 ];
 
 export interface EducationItem {
@@ -22,19 +64,21 @@ export const education: EducationItem[] = [
     location: 'Munich, Germany',
     period: '2025 – 2027 (expected)',
     current: true,
-    details: 'TODO: focus areas, notable courses or projects.',
+    details: 'Coursework projects in machine learning, NLP, time-series forecasting and responsible AI.',
   },
   {
     degree: 'B.E. Computer Science & Engineering',
     school: 'The National Institute of Engineering (NIE)',
     location: 'Mysuru, India',
     period: '2023 – 2025',
+    details: 'First Class. VTU Sports Award for athletic achievement alongside studies.',
   },
   {
     degree: 'Diploma in Computer Science',
     school: 'JSS Polytechnic for Women',
     location: 'Mysuru, India',
     period: '2019 – 2022',
+    details: 'First Class with Distinction.',
   },
 ];
 
@@ -43,11 +87,11 @@ export interface SkillGroup {
   items: string[];
 }
 
-// TODO: review and adjust to match your actual skill set.
 export const skills: SkillGroup[] = [
-  { label: 'Languages', items: ['Python', 'SQL'] },
-  { label: 'Data & ML', items: ['pandas', 'NumPy', 'scikit-learn', 'time-series forecasting'] },
-  { label: 'GenAI', items: ['LLMs', 'retrieval-augmented generation', 'LangChain', 'prompt design'] },
-  { label: 'BI & viz', items: ['Power BI', 'DAX', 'Power Query', 'matplotlib'] },
-  { label: 'Practices', items: ['Git', 'Jupyter', 'responsible AI'] },
+  { label: 'Languages', items: ['Python', 'SQL', 'Java', 'C', 'Bash'] },
+  { label: 'Machine learning', items: ['scikit-learn', 'XGBoost', 'time-series forecasting', 'model evaluation & CV'] },
+  { label: 'NLP & GenAI', items: ['sentence-transformers', 'FAISS', 'RAG', 'LDA / gensim', 'spaCy', 'NLTK', 'OpenAI API'] },
+  { label: 'Data & BI', items: ['pandas', 'NumPy', 'Power BI', 'Tableau', 'matplotlib', 'seaborn', 'Excel'] },
+  { label: 'Databases', items: ['PostgreSQL', 'MySQL', 'SQLite', 'MongoDB'] },
+  { label: 'Tools', items: ['Git', 'Docker', 'Linux', 'Jupyter', 'Streamlit'] },
 ];

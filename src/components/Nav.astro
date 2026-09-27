@@ -1,6 +1,7 @@
 ---
 import MotionToggle from './MotionToggle.astro';
 import { useTranslations, getLangFromUrl, localizePath } from '@/i18n/utils';
+import { getNotes } from '@/lib/content';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -8,7 +9,8 @@ const links = [
   { href: localizePath('/', lang), label: t('nav.home') },
   { href: localizePath('/projects/', lang), label: t('nav.projects') },
   { href: localizePath('/about/', lang), label: t('nav.about') },
-  { href: localizePath('/notes/', lang), label: t('nav.notes') },
+  // Notes appear in the menu once at least one note is published.
+  ...((await getNotes()).length > 0 ? [{ href: localizePath('/notes/', lang), label: t('nav.notes') }] : []),
   { href: localizePath('/contact/', lang), label: t('nav.contact') },
 ];
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';

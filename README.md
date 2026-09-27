@@ -40,7 +40,9 @@ GitHub README, then builds, commits and pushes.
    demo: https://...                                   # optional
    image: /images/projects/my-project.png              # optional, file in public/images/projects/
    imageAlt: "What the image shows"                    # needed if image is set
+   highlights: ["91% accuracy"]  # optional, max 3 short result chips
    featured: false          # true = shown on the home page (max 3)
+   draft: false             # true = hidden on the live site until finished
    ---
    ```
 
@@ -56,8 +58,8 @@ Notes/blog posts work the same way in `src/content/notes/` (fields: `title`, `da
 
 | What                                   | Where                   |
 | -------------------------------------- | ----------------------- |
-| Email, GitHub, LinkedIn, languages     | `src/data/profile.ts`   |
-| About page bio, education, skills      | `src/data/about.ts`     |
+| Email, GitHub, LinkedIn, CV, languages | `src/data/profile.ts`   |
+| Bio, experience, education, skills     | `src/data/about.ts`     |
 | Home text, at-a-glance card, all labels | `src/i18n/en.ts`        |
 | Colours, fonts, spacing                | `src/styles/tokens.css` |
 | Social preview image / icons           | `scripts/generate-images.mjs`, then `npm run images` |

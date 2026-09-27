@@ -3,7 +3,7 @@
 export const en = {
   'site.title': 'Chandana — Applied Data Science & AI',
   'site.description':
-    'Portfolio of Chandana, M.Sc. Applied Data Science & AI student in Germany. Forecasting, RAG and generative AI, and BI projects. Open to working-student roles in Regensburg or remote.',
+    'Chandana Gurusiddappa — M.Sc. Applied Data Science & AI student in Germany building NLP, RAG and forecasting systems. Open to working-student roles in Regensburg or remote.',
 
   'skip': 'Skip to main content',
   'nav.home': 'Home',
@@ -21,11 +21,16 @@ export const en = {
   'footer.source': 'Source',
 
   'home.eyebrow': 'hello, world',
+  'home.available': 'Open to Werkstudent roles · Regensburg / remote',
+  'home.role': 'Data Science & ML — NLP, RAG and forecasting',
   'home.greeting': "Hi, I'm",
   'home.lede':
-    'I study Applied Data Science & AI in Munich and build forecasting models, retrieval-augmented assistants and dashboards that people actually use. Currently looking for a working-student role in Regensburg or remote.',
+    'M.Sc. student at SRH University with a data-science internship behind me. I build ML systems end to end and evaluate them honestly — a news classifier at 91% accuracy, a RAG assistant that cites its sources, and COVID-19 forecasts that cut error by 87% versus a linear baseline.',
   'home.cta.projects': 'See projects',
   'home.cta.contact': 'Get in touch',
+  'home.cta.cv': 'Download CV',
+  'home.experience': 'Experience',
+  'home.proof': 'Selected results',
   'home.featured': 'Featured projects',
   'home.allProjects': 'All projects',
   'home.notes': 'Recent notes',
@@ -40,8 +45,8 @@ export const en = {
   'glance.based': 'based',
   'glance.seeking': 'seeking',
   'glance.roleValue': 'M.Sc. Applied Data Science & AI @ SRH University',
-  'glance.focusValue': 'time-series forecasting · RAG / GenAI · BI',
-  'glance.stackValue': 'Python · SQL · pandas · scikit-learn · LangChain · Power BI',
+  'glance.focusValue': 'NLP · RAG / GenAI · time-series forecasting',
+  'glance.stackValue': 'Python · SQL · scikit-learn · XGBoost · FAISS · Power BI',
   'glance.basedValue': 'Regensburg, DE',
   'glance.seekingValue': 'working student · Regensburg / remote',
 
@@ -55,6 +60,7 @@ export const en = {
   'projects.demo': 'Live demo',
   'projects.stack': 'Stack',
   'projects.tags': 'Tags',
+  'projects.results': 'Key results',
 
   'status.completed': 'completed',
   'status.in-progress': 'in progress',
@@ -68,6 +74,7 @@ export const en = {
   'about.title': 'About',
   'about.education': 'Education',
   'about.skills': 'Skills',
+  'about.experience': 'Experience',
   'about.languages': 'Languages',
 
   'contact.title': 'Contact',

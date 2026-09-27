@@ -11,6 +11,7 @@ const channels = [
   ...(isSet(profile.linkedin)
     ? [{ label: t('contact.linkedin'), value: profile.linkedin.replace(/^https:\/\/(www\.)?/, ''), href: profile.linkedin }]
     : []),
+  ...(isSet(profile.cv) ? [{ label: 'CV', value: 'Download PDF', href: profile.cv }] : []),
 ];
 ---
 

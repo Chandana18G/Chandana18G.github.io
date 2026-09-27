@@ -1,0 +1,52 @@
+---
+import { experience } from '@/data/about';
+---
+
+<ol class="xp">
+  {experience.map((x) => (
+    <li>
+      <div class="head">
+        <h3>{x.role} <span class="at">@ {x.company}</span></h3>
+        <p class="period">{x.period} · {x.location}</p>
+      </div>
+      <ul class="points">{x.points.map((p) => <li>{p}</li>)}</ul>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .xp {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+  }
+  .xp > li {
+    padding: var(--space-6);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--violet);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-6);
+  }
+  h3 { font-size: var(--step-1); }
+  .at { color: var(--violet-bright); font-weight: 500; }
+  .period {
+    font: 500 var(--step--1) / 1.6 var(--font-mono);
+    color: var(--text-muted);
+  }
+  .points {
+    margin-top: var(--space-3);
+    padding-left: 1.2em;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+  .points li + li { margin-top: var(--space-1); }
+  .points li::marker { color: var(--neon); }
+</style>

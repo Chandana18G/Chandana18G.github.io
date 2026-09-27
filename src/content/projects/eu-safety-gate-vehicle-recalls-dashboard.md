@@ -7,6 +7,7 @@ tags: [bi, dashboard, automotive]
 stack: [Power BI, DAX, Power Query]
 github: TODO
 featured: false
+draft: true # hidden on the live site until the TODOs are filled in
 ---
 
 ## Problem

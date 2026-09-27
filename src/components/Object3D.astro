@@ -34,27 +34,68 @@ const { variant, size = '200px', class: className } = Astro.props;
   import { canRun3D } from '@/lib/three/capability';
   import type { Variant } from '@/lib/three/objects';
 
-  async function mountAll() {
-    const els = [...document.querySelectorAll<HTMLElement>('[data-object3d]:not([data-mounted])')];
-    if (!els.length || !canRun3D()) return;
+  const whenIdle = (cb: () => void) =>
+    'requestIdleCallback' in window ? requestIdleCallback(cb, { timeout: 2500 }) : setTimeout(cb, 1200);
+
+  // Objects are mounted one at a time, only when they come near the viewport, with an idle
+  // gap between each, so no single long task blocks the main thread.
+  const queue: HTMLElement[] = [];
+  let draining = false;
+
+  async function drain() {
+    if (draining) return;
+    draining = true;
     try {
       const { mountObject } = await import('@/lib/three/objects');
-      for (const el of els) {
-        el.dataset.mounted = 'true';
+      while (queue.length) {
+        const el = queue.shift()!;
         const handle = mountObject(el, el.dataset.object3d as Variant, { paused: isMotionPaused() });
         el.classList.add('is-3d');
         onMotionChange((paused) => handle.setPaused(paused));
+        await new Promise<void>((resolve) => whenIdle(resolve));
       }
     } catch (err) {
       console.warn('3D unavailable, keeping static fallbacks:', err);
+    } finally {
+      draining = false;
     }
   }
 
-  // Load Three.js only after the page has loaded and the browser is idle.
-  const whenIdle = (cb: () => void) =>
-    'requestIdleCallback' in window ? requestIdleCallback(cb, { timeout: 2500 }) : setTimeout(cb, 1200);
-  if (document.readyState === 'complete') whenIdle(mountAll);
-  else window.addEventListener('load', () => whenIdle(mountAll), { once: true });
+  function mountAll() {
+    const els = [...document.querySelectorAll<HTMLElement>('[data-object3d]:not([data-mounted])')];
+    if (!els.length || !canRun3D()) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const el = entry.target as HTMLElement;
+          io.unobserve(el);
+          el.dataset.mounted = 'true';
+          queue.push(el);
+        }
+        drain();
+      },
+      { rootMargin: '200px' },
+    );
+    els.forEach((el) => io.observe(el));
+  }
+
+  // Load Three.js only after the page has loaded, then on the first interaction or after a
+  // short delay (whichever comes first), so page start-up is never competing with WebGL.
+  function start() {
+    let started = false;
+    const go = () => {
+      if (started) return;
+      started = true;
+      events.forEach((e) => window.removeEventListener(e, go));
+      whenIdle(mountAll);
+    };
+    const events = ['pointermove', 'pointerdown', 'scroll', 'keydown', 'touchstart'] as const;
+    events.forEach((e) => window.addEventListener(e, go, { once: true, passive: true }));
+    setTimeout(go, 4000);
+  }
+  if (document.readyState === 'complete') start();
+  else window.addEventListener('load', start, { once: true });
 </script>
 
 <style>
