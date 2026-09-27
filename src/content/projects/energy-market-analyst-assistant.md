@@ -1,31 +1,18 @@
 ---
 title: "Energy Market Analyst Assistant"
-date: 2026-12-01 # TODO: set the real date
+date: 2026-12-01 # TODO: confirm the real date
 status: planned
-summary: "TODO: A planned AI assistant that helps analysts explore and explain energy market data."
+summary: "Planned: an AI assistant that helps analysts explore and explain energy market data."
 tags: [energy, genai, llm]
-stack: [Python]
-github: TODO
+stack: [] # TODO: add the tools you actually used
+github: TODO # TODO: add the repo link (the Code button appears automatically)
 featured: false
-draft: true # hidden on the live site until the TODOs are filled in
+# TODO: add highlights: ["..."] with real results once you have them
 ---
 
-## Problem
+## Overview
 
-TODO: What problem does this project address, and why does it matter?
+A planned project combining energy market data with generative AI, so analysts can ask questions
+about the market in plain language.
 
-## Data
-
-TODO: Data sources, size, time range and preprocessing.
-
-## Approach
-
-TODO: Methods, models and tools, and why you chose them.
-
-## Planned scope
-
-TODO: Intended features, milestones and target timeline.
-
-## Open questions
-
-TODO: Unknowns to resolve before building.
+*Planned project; details will be added as it takes shape.*

@@ -1,33 +1,18 @@
 ---
 title: "Claims Copilot: Generative AI for Motor Insurance"
-date: 2025-05-01 # TODO: set the real date
+date: 2025-05-01 # TODO: confirm the real date
 status: completed
-summary: "TODO: A generative-AI assistant for motor insurance claims, built as a Responsible AI group project."
+summary: "A generative-AI assistant for motor insurance claims, built as a group project with a focus on responsible AI."
 tags: [genai, llm, insurance, responsible-ai]
-stack: [Python]
-github: TODO
+stack: [] # TODO: add the tools you actually used
+github: TODO # TODO: add the repo link (the Code button appears automatically)
 featured: false
-draft: true # hidden on the live site until the TODOs are filled in
+# TODO: add highlights: ["..."] with real results once you have them
 ---
 
-> Group project (Responsible AI). TODO: team size and my role.
+## Overview
 
-## Problem
+A group project exploring how generative AI can support motor insurance claims handling,
+designed around responsible-AI principles.
 
-TODO: What problem does this project address, and why does it matter?
-
-## Data
-
-TODO: Data sources, size, time range and preprocessing.
-
-## Approach
-
-TODO: Methods, models and tools, and why you chose them.
-
-## Results
-
-TODO: Key metrics, findings or outcomes.
-
-## What I learned
-
-TODO: Main takeaways and challenges.
+*A detailed write-up (data, approach and results) is coming soon.*
