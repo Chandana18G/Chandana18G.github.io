@@ -7,7 +7,7 @@ export const profile = {
   origin: 'Mysuru, India',
   email: 'Chanduu4055@gmail.com',
   github: 'https://github.com/Chandana18G',
-  linkedin: 'TODO',
+  linkedin: 'https://www.linkedin.com/in/chandana-gurusiddappa-785563223/',
   siteUrl: 'https://chandana18g.github.io',
   languages: [
     { name: 'English', level: 'C1' },
