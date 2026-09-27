@@ -3,7 +3,7 @@
 export const bio: string[] = [
   "I'm Chandana, an M.Sc. student in Applied Data Science & AI at SRH University's Munich campus. I live in Regensburg, Bavaria, and grew up in Mysuru, India.",
   'I like problems where data meets a real decision: forecasting energy prices, anticipating clinical needs, or helping someone find the right answer in a pile of documents. I care about models that are useful, explainable and responsibly built, not just accurate on a benchmark.',
-  "I'm looking for a 6-month mandatory internship (Pflichtpraktikum) and working-student roles in Germany or Europe, in industry teams working on data science, machine learning or applied generative AI.",
+  "I'm looking for a working-student role (Werkstudent) in Regensburg or remote, in an industry team working on data science, machine learning or applied generative AI.",
 ];
 
 export interface EducationItem {

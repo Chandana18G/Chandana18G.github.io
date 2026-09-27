@@ -3,7 +3,7 @@
 export const en = {
   'site.title': 'Chandana — Applied Data Science & AI',
   'site.description':
-    'Portfolio of Chandana, M.Sc. Applied Data Science & AI student in Germany. Forecasting, RAG and generative AI, and BI projects. Open to internships and working-student roles.',
+    'Portfolio of Chandana, M.Sc. Applied Data Science & AI student in Germany. Forecasting, RAG and generative AI, and BI projects. Open to working-student roles in Regensburg or remote.',
 
   'skip': 'Skip to main content',
   'nav.home': 'Home',
@@ -23,7 +23,7 @@ export const en = {
   'home.eyebrow': 'hello, world',
   'home.greeting': "Hi, I'm",
   'home.lede':
-    'I study Applied Data Science & AI in Munich and build forecasting models, retrieval-augmented assistants and dashboards that people actually use. Currently looking for a 6-month internship (Pflichtpraktikum) or a working-student role in Germany or Europe.',
+    'I study Applied Data Science & AI in Munich and build forecasting models, retrieval-augmented assistants and dashboards that people actually use. Currently looking for a working-student role in Regensburg or remote.',
   'home.cta.projects': 'See projects',
   'home.cta.contact': 'Get in touch',
   'home.featured': 'Featured projects',
@@ -43,7 +43,7 @@ export const en = {
   'glance.focusValue': 'time-series forecasting · RAG / GenAI · BI',
   'glance.stackValue': 'Python · SQL · pandas · scikit-learn · LangChain · Power BI',
   'glance.basedValue': 'Regensburg, DE',
-  'glance.seekingValue': 'internship · working student',
+  'glance.seekingValue': 'working student · Regensburg / remote',
 
   'projects.title': 'Projects',
   'projects.lede': 'Things I have built, am building, or plan to build.',
@@ -72,7 +72,7 @@ export const en = {
 
   'contact.title': 'Contact',
   'contact.lede':
-    'I am looking for a 6-month mandatory internship (Pflichtpraktikum) and working-student roles in data science, ML or AI engineering. The fastest way to reach me is email.',
+    'I am looking for a working-student role (Werkstudent) in data science, ML or AI engineering, in Regensburg or remote. The fastest way to reach me is email.',
   'contact.email': 'Email',
   'contact.github': 'GitHub',
   'contact.linkedin': 'LinkedIn',
