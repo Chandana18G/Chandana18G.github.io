@@ -1,19 +1,19 @@
 ---
-// Fixed, full-page 3D background behind all content: two objects per page that
+// Fixed, full-page 3D background behind all content: three objects per page that
 // drift with scroll. Static SVGs show first (and stay on devices without WebGL);
 // the Three.js version fades in after the first interaction or 4 s.
 import type { Variant } from '@/lib/three/objects';
 
 interface Props {
-  /** The two objects for this page: [large top-right, smaller bottom-left]. */
-  variants: readonly [Variant, Variant];
+  /** The three objects for this page: [right, left, centre behind the text]. */
+  variants: readonly [Variant, Variant, Variant];
 }
 
 const { variants } = Astro.props;
 ---
 
 <div class="bg3d" data-bg3d={variants.join(',')} aria-hidden="true">
-  {[0, 1].map((i) => (
+  {[0, 1, 2].map((i) => (
     <svg class={`fallback slot-${i}`} viewBox="0 0 100 100">
       <g fill="none" stroke="#b794ff" stroke-opacity=".5" stroke-width=".6">
         <circle cx="50" cy="50" r="40"></circle>
@@ -98,6 +98,7 @@ const { variants } = Astro.props;
     transition: opacity 1s var(--ease);
   }
   /* Same placement as the 3D slots in src/lib/three/objects.ts. */
-  .slot-0 { left: 80%; top: 30%; width: 55vmin; height: 55vmin; }
-  .slot-1 { left: 14%; top: 82%; width: 36vmin; height: 36vmin; }
+  .slot-0 { left: 82%; top: 26%; width: 36vmin; height: 36vmin; }
+  .slot-1 { left: 12%; top: 84%; width: 26vmin; height: 26vmin; }
+  .slot-2 { left: 42%; top: 60%; width: 30vmin; height: 30vmin; }
 </style>

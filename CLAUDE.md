@@ -144,11 +144,11 @@ Glows: `--glow-sm`, `--glow-md`. Body text on `--bg` must stay ≥ 4.5:1 contras
   Subscribe with `onMotionChange(cb)` from `@/lib/motion`.
 - CSS animations are paused globally under `html[data-motion="paused"]`.
 - 3D background: `Background3D.astro` (included by `BaseLayout`) is a fixed, full-page layer
-  behind all content (`z-index: 0`; `main` and the footer sit at `z-index: 1`). Each page shows two
-  objects: a large one top-right and a smaller one bottom-left, which drift across each other as
+  behind all content (`z-index: 0`; `main` and the footer sit at `z-index: 1`). Each page shows three
+  objects (right, left, and centre behind the text column), which drift across each other as
   the page scrolls and lean toward the mouse. Choose them per page with
-  `<BaseLayout scene={['sphere', 'orbit']}>` (variants: sphere, icosa, knot, helix, orbit; default
-  `['icosa', 'orbit']`). Slot positions/sizes live in `SLOTS` in `lib/three/objects.ts` and are
+  `<BaseLayout scene={['sphere', 'orbit', 'helix']}>` (variants: sphere, icosa, knot, helix, orbit;
+  default `['icosa', 'orbit', 'knot']`). Brightness: `opacity` on `.bg3d`. Slot positions/sizes live in `SLOTS` in `lib/three/objects.ts` and are
   mirrored by the `.slot-*` fallback SVG classes in `Background3D.astro`.
 - Static SVG shapes show first. After `load`, on the first interaction (or 4 s), `canRun3D()`
   (no WebGL, Save-Data, <4 GB memory or <4 cores → keep the SVGs) gates a dynamic import of
