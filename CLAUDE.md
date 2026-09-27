@@ -63,7 +63,11 @@ Import alias: `@/` → `src/`.
 
 ## Content rules
 
-- **Never publish placeholder text.** A project with TODOs must have `draft: true`.
+- **Never hide or remove a project without asking the user first.** All of her projects stay
+  visible. `draft: true` is only for when she asks for it.
+- **Never publish placeholder text.** Keep TODO reminders as YAML comments in the frontmatter
+  (`# TODO: ...`), not in the visible summary or body. For unfinished write-ups, use a short
+  factual overview and "*A detailed write-up ... is coming soon.*"
 - **Never invent results.** Numbers in `highlights`/Results must come from the linked repo
   or from the user. When unsure, leave it out.
 - Experience, education and skills live in `src/data/about.ts`; the CV link in `src/data/profile.ts`.

@@ -1,31 +1,18 @@
 ---
 title: "German Electricity Price Forecasting"
-date: 2025-09-01 # TODO: set the real date
+date: 2025-09-01 # TODO: confirm the real date
 status: completed
-summary: "TODO: Forecasting German day-ahead electricity prices from SMARD market data."
+summary: "Forecasting German electricity prices using public market data from SMARD, the energy-market data platform of Germany's Federal Network Agency."
 tags: [energy, time-series, forecasting]
-stack: [Python, pandas, scikit-learn]
-github: TODO
+stack: [Python] # TODO: add the tools you actually used
+github: TODO # TODO: add the repo link (the Code button appears automatically)
 featured: false
-draft: true # hidden on the live site until the TODOs are filled in
+# TODO: add highlights: ["..."] with real results once you have them
 ---
 
-## Problem
+## Overview
 
-TODO: What problem does this project address, and why does it matter?
+A time-series forecasting project for the German electricity market, built on public data
+from [SMARD](https://www.smard.de/en) (Bundesnetzagentur).
 
-## Data
-
-TODO: Data sources, size, time range and preprocessing.
-
-## Approach
-
-TODO: Methods, models and tools, and why you chose them.
-
-## Results
-
-TODO: Key metrics, findings or outcomes.
-
-## What I learned
-
-TODO: Main takeaways and challenges.
+*A detailed write-up (data, approach and results) is coming soon.*

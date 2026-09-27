@@ -1,31 +1,19 @@
 ---
 title: "EU Safety Gate Motor Vehicle Recalls Dashboard"
-date: 2025-06-01 # TODO: set the real date
+date: 2025-06-01 # TODO: confirm the real date
 status: completed
-summary: "TODO: A Power BI dashboard exploring motor vehicle recall alerts from the EU Safety Gate system."
+summary: "An interactive Power BI dashboard analysing motor vehicle recall alerts reported through the EU Safety Gate rapid alert system."
 tags: [bi, dashboard, automotive]
-stack: [Power BI, DAX, Power Query]
-github: TODO
+stack: [Power BI] # TODO: add the tools you actually used
+github: TODO # TODO: add the repo link (the Code button appears automatically)
 featured: false
-draft: true # hidden on the live site until the TODOs are filled in
+# TODO: add highlights: ["..."] with real results once you have them
 ---
 
-## Problem
+## Overview
 
-TODO: What problem does this project address, and why does it matter?
+A business-intelligence dashboard built on public alerts from the
+[EU Safety Gate](https://ec.europa.eu/safety-gate-alerts/) rapid alert system, focused on motor
+vehicle recalls.
 
-## Data
-
-TODO: Data sources, size, time range and preprocessing.
-
-## Approach
-
-TODO: Methods, models and tools, and why you chose them.
-
-## Results
-
-TODO: Key metrics, findings or outcomes.
-
-## What I learned
-
-TODO: Main takeaways and challenges.
+*A detailed write-up (data, approach and results) is coming soon.*
