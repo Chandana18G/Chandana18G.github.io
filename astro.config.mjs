@@ -12,6 +12,10 @@ export default defineConfig({
     locales: ['en'],
     defaultLocale: 'en',
   },
+  vite: {
+    // The Three.js hero chunk (~130 kB gzipped) is lazy-loaded after page load.
+    build: { chunkSizeWarningLimit: 600 },
+  },
   markdown: {
     shikiConfig: { theme: 'github-dark-dimmed' },
   },

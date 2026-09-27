@@ -44,6 +44,33 @@ const t = useTranslations(lang);
   </div>
 </section>
 
+<script>
+  import { isMotionPaused, onMotionChange } from '@/lib/motion';
+  import { canRunHero3D } from '@/lib/hero/capability';
+
+  const container = document.querySelector<HTMLElement>('[data-hero-scene]');
+  const hero = container?.closest<HTMLElement>('.hero');
+
+  async function mount() {
+    if (!container || !hero || !canRunHero3D()) return;
+    try {
+      const { createHero } = await import('@/lib/hero/scene');
+      const handle = createHero(container, { paused: isMotionPaused() });
+      hero.classList.add('is-3d');
+      onMotionChange((paused) => handle.setPaused(paused));
+    } catch (err) {
+      // Keep the static fallback if WebGL setup fails.
+      console.warn('Hero 3D unavailable:', err);
+    }
+  }
+
+  // Load Three.js only after the page has loaded and the browser is idle.
+  const whenIdle = (cb: () => void) =>
+    'requestIdleCallback' in window ? requestIdleCallback(cb, { timeout: 2500 }) : setTimeout(cb, 1200);
+  if (document.readyState === 'complete') whenIdle(mount);
+  else window.addEventListener('load', () => whenIdle(mount), { once: true });
+</script>
+
 <style>
   .hero {
     position: relative;
@@ -55,8 +82,11 @@ const t = useTranslations(lang);
   }
   .visual {
     position: absolute;
-    inset: 0 0 0 38%;
+    inset: 0 0 0 46%;
     z-index: -1;
+    /* Fade the left edge so the graph never competes with the text. */
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 18%);
+    mask-image: linear-gradient(to right, transparent, #000 18%);
   }
   .fallback,
   .scene {
@@ -71,6 +101,7 @@ const t = useTranslations(lang);
   .hero:global(.is-3d) .fallback { opacity: 0; }
   .copy { padding-block: var(--space-16); }
   .copy > * { max-width: 38rem; }
+  .copy > .lede { max-width: 33rem; }
   h1 { margin-top: var(--space-3); }
   .name {
     background: linear-gradient(90deg, var(--violet-bright), var(--neon), var(--magenta));
@@ -93,7 +124,7 @@ const t = useTranslations(lang);
   }
 
   @media (max-width: 860px) {
-    .visual { inset: 0; opacity: 0.45; }
+    .visual { inset: 0; opacity: 0.3; -webkit-mask-image: none; mask-image: none; }
     .hero { min-height: auto; }
     /* Keep text readable over the visual. */
     .copy { text-shadow: 0 2px 16px rgb(7 6 11 / 0.9); }
