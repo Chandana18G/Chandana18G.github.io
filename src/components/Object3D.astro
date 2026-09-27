@@ -1,0 +1,87 @@
+---
+// A small decorative 3D object. Renders a static SVG first; the WebGL version
+// (src/lib/three/objects.ts) fades in after page load on capable devices.
+import type { Variant } from '@/lib/three/objects';
+
+interface Props {
+  variant: Variant;
+  /** CSS size (width = height), e.g. "220px" or "clamp(160px, 30vw, 260px)". */
+  size?: string;
+  class?: string;
+}
+
+const { variant, size = '200px', class: className } = Astro.props;
+---
+
+<div class:list={['object3d', className]} data-object3d={variant} style={`--size: ${size}`} aria-hidden="true">
+  <svg class="fallback" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="44" fill="#8b5cf6" fill-opacity=".07"></circle>
+    <g fill="none" stroke="#b794ff" stroke-opacity=".45" stroke-width=".7">
+      <circle cx="50" cy="50" r="30"></circle>
+      <ellipse cx="50" cy="50" rx="30" ry="11"></ellipse>
+      <ellipse cx="50" cy="50" rx="11" ry="30"></ellipse>
+      <ellipse cx="50" cy="50" rx="30" ry="11" transform="rotate(55 50 50)"></ellipse>
+    </g>
+    <g fill="#c77dff">
+      <circle cx="80" cy="50" r="2.2"></circle><circle cx="50" cy="20" r="2.2"></circle>
+      <circle cx="33" cy="74" r="2.2"></circle><circle cx="50" cy="50" r="3.2" fill="#f0d9ff"></circle>
+    </g>
+  </svg>
+</div>
+
+<script>
+  import { isMotionPaused, onMotionChange } from '@/lib/motion';
+  import { canRun3D } from '@/lib/three/capability';
+  import type { Variant } from '@/lib/three/objects';
+
+  async function mountAll() {
+    const els = [...document.querySelectorAll<HTMLElement>('[data-object3d]:not([data-mounted])')];
+    if (!els.length || !canRun3D()) return;
+    try {
+      const { mountObject } = await import('@/lib/three/objects');
+      for (const el of els) {
+        el.dataset.mounted = 'true';
+        const handle = mountObject(el, el.dataset.object3d as Variant, { paused: isMotionPaused() });
+        el.classList.add('is-3d');
+        onMotionChange((paused) => handle.setPaused(paused));
+      }
+    } catch (err) {
+      console.warn('3D unavailable, keeping static fallbacks:', err);
+    }
+  }
+
+  // Load Three.js only after the page has loaded and the browser is idle.
+  const whenIdle = (cb: () => void) =>
+    'requestIdleCallback' in window ? requestIdleCallback(cb, { timeout: 2500 }) : setTimeout(cb, 1200);
+  if (document.readyState === 'complete') whenIdle(mountAll);
+  else window.addEventListener('load', () => whenIdle(mountAll), { once: true });
+</script>
+
+<style>
+  .object3d {
+    position: relative;
+    width: var(--size);
+    height: var(--size);
+    flex: none;
+  }
+  .object3d :global(canvas),
+  .fallback {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.9s var(--ease);
+  }
+  .object3d :global(canvas) { opacity: 0; }
+  .object3d:global(.is-3d) :global(canvas) { opacity: 1; }
+  .object3d:global(.is-3d) .fallback { opacity: 0; }
+  /* Soft violet halo behind every object. */
+  .object3d::before {
+    content: '';
+    position: absolute;
+    inset: 12%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(139 92 246 / 0.22), transparent 70%);
+    filter: blur(12px);
+  }
+</style>
