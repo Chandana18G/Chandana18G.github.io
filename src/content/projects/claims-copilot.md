@@ -6,7 +6,8 @@ summary: "TODO: A generative-AI assistant for motor insurance claims, built as a
 tags: [genai, llm, insurance, responsible-ai]
 stack: [Python]
 github: TODO
-featured: true
+featured: false
+draft: true # hidden on the live site until the TODOs are filled in
 ---
 
 > Group project (Responsible AI). TODO: team size and my role.

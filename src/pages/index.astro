@@ -4,6 +4,7 @@ import Hero from '@/components/Hero.astro';
 import GlanceCard from '@/components/GlanceCard.astro';
 import ProjectCard from '@/components/ProjectCard.astro';
 import NoteList from '@/components/NoteList.astro';
+import ExperienceList from '@/components/ExperienceList.astro';
 import { getFeaturedProjects, getNotes } from '@/lib/content';
 import { useTranslations, getLangFromUrl, localizePath } from '@/i18n/utils';
 
@@ -22,9 +23,9 @@ const notes = (await getNotes()).slice(0, 3);
       <p class="eyebrow">// what I do</p>
       <h2>Data science that ends in a decision.</h2>
       <p class="muted">
-        My projects so far cover energy and health-tech forecasting, retrieval-augmented generation,
-        responsible generative AI for insurance, and business-intelligence dashboards. I enjoy the whole
-        path, from messy public data to a model or tool someone can actually use.
+        I like the whole path: messy public data, careful validation, a model I can explain, and a
+        tool someone can actually use. Recent work covers NLP and semantic search, retrieval-augmented
+        generation, and time-series forecasting for health data.
       </p>
       <a href={localizePath('/about/', lang)}>More about me →</a>
     </div>
@@ -40,13 +41,23 @@ const notes = (await getNotes()).slice(0, 3);
     </div>
   </section>
 
-  <section class="container section" aria-labelledby="notes-title">
+  <section class="container section" aria-labelledby="xp-title">
     <div class="section-head">
-      <h2 id="notes-title">{t('home.notes')}</h2>
-      {notes.length > 0 && <a href={localizePath('/notes/', lang)}>{t('home.allNotes')} →</a>}
+      <h2 id="xp-title">{t('home.experience')}</h2>
+      <a href={localizePath('/about/', lang)}>Education & skills →</a>
     </div>
-    <NoteList notes={notes} emptyText={t('home.noNotes')} />
+    <ExperienceList />
   </section>
+
+  {notes.length > 0 && (
+    <section class="container section" aria-labelledby="notes-title">
+      <div class="section-head">
+        <h2 id="notes-title">{t('home.notes')}</h2>
+        <a href={localizePath('/notes/', lang)}>{t('home.allNotes')} →</a>
+      </div>
+      <NoteList notes={notes} emptyText={t('home.noNotes')} />
+    </section>
+  )}
 </BaseLayout>
 
 <style>
