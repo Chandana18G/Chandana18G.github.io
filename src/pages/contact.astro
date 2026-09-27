@@ -1,0 +1,61 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import { profile, isSet } from '@/data/profile';
+import { useTranslations, getLangFromUrl } from '@/i18n/utils';
+
+const t = useTranslations(getLangFromUrl(Astro.url));
+const channels = [
+  { label: t('contact.email'), value: profile.email, href: `mailto:${profile.email}`, primary: true },
+  { label: t('contact.github'), value: profile.github.replace('https://', ''), href: profile.github },
+  ...(isSet(profile.linkedin)
+    ? [{ label: t('contact.linkedin'), value: profile.linkedin.replace(/^https:\/\/(www\.)?/, ''), href: profile.linkedin }]
+    : []),
+];
+---
+
+<BaseLayout title={t('contact.title')} description={t('contact.lede')}>
+  <PageHeader eyebrow="// contact" title={t('contact.title')} lede={t('contact.lede')} />
+  <section class="container">
+    <ul class="channels">
+      {channels.map((c) => (
+        <li>
+          <a class:list={['channel', { primary: c.primary }]} href={c.href} rel={c.primary ? undefined : 'me'}>
+            <span class="label">{c.label}</span>
+            <span class="value">{c.value}</span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="muted note">{profile.location} · English C1 · German B1</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .channels { list-style: none; padding: 0; display: grid; gap: var(--space-4); max-width: 44rem; }
+  .channel {
+    display: grid;
+    grid-template-columns: 7rem 1fr auto;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+    text-decoration: none;
+    transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  }
+  .channel:hover { border-color: var(--violet); box-shadow: var(--glow-md); color: var(--text); }
+  .channel.primary { background: linear-gradient(135deg, rgb(109 63 224 / 0.25), rgb(17 14 26)); }
+  .label { font: 500 var(--step--1) / 1 var(--font-mono); color: var(--neon); }
+  .value { font-size: var(--step-1); overflow-wrap: anywhere; }
+  .arrow { color: var(--violet-bright); transition: transform 0.25s var(--ease); }
+  .channel:hover .arrow { transform: translateX(4px); }
+  .note { margin-top: var(--space-8); font-size: var(--step--1); font-family: var(--font-mono); }
+  @media (max-width: 560px) {
+    .channel { grid-template-columns: 1fr auto; }
+    .label { grid-column: 1 / -1; }
+  }
+</style>

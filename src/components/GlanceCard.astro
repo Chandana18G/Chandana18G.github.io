@@ -1,0 +1,90 @@
+---
+import { profile } from '@/data/profile';
+import { useTranslations, getLangFromUrl } from '@/i18n/utils';
+
+const t = useTranslations(getLangFromUrl(Astro.url));
+const rows = [
+  { key: t('glance.name'), value: profile.shortName },
+  { key: t('glance.role'), value: t('glance.roleValue') },
+  { key: t('glance.focus'), value: t('glance.focusValue') },
+  { key: t('glance.stack'), value: t('glance.stackValue') },
+  { key: t('glance.based'), value: t('glance.basedValue') },
+  { key: t('glance.seeking'), value: t('glance.seekingValue') },
+];
+---
+
+<section class="glance" aria-labelledby="glance-title">
+  <div class="chrome" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
+  <h2 id="glance-title" class="file">~/chandana/{t('glance.title')}.yml</h2>
+  <dl>
+    {rows.map((r) => (
+      <div class="row">
+        <dt>{r.key}:</dt>
+        <dd>{r.value}</dd>
+      </div>
+    ))}
+  </dl>
+  <p class="prompt" aria-hidden="true"><span class="caret">❯</span> <span class="cursor"></span></p>
+</section>
+
+<style>
+  .glance {
+    position: relative;
+    padding: var(--space-6);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: rgb(12 10 19 / 0.85);
+    box-shadow: 0 20px 60px -20px rgb(139 92 246 / 0.35);
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+  }
+  .chrome {
+    display: flex;
+    gap: 6px;
+    margin-bottom: var(--space-4);
+  }
+  .chrome span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+  .chrome span:first-child { background: var(--magenta); }
+  .chrome span:nth-child(2) { background: var(--violet); }
+  .chrome span:last-child { background: var(--mint); }
+  .file {
+    font: 500 0.8rem / 1.4 var(--font-mono);
+    color: var(--text-muted);
+    margin-bottom: var(--space-4);
+    letter-spacing: 0;
+  }
+  dl { display: grid; gap: var(--space-2); }
+  .row {
+    display: grid;
+    grid-template-columns: 6.5em 1fr;
+    gap: var(--space-2);
+  }
+  dt { color: var(--neon); }
+  dd { color: var(--text); }
+  .prompt {
+    margin-top: var(--space-4);
+    color: var(--mint);
+  }
+  .cursor {
+    display: inline-block;
+    width: 0.55em;
+    height: 1.1em;
+    vertical-align: text-bottom;
+    background: var(--violet-bright);
+    animation: blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+  @media (max-width: 420px) {
+    .row { grid-template-columns: 1fr; gap: 0; }
+    .row + .row { margin-top: var(--space-2); }
+  }
+</style>

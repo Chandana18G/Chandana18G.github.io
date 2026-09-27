@@ -1,0 +1,42 @@
+---
+import type { ProjectStatus } from '@/content.config';
+import { useTranslations, getLangFromUrl } from '@/i18n/utils';
+
+interface Props {
+  status: ProjectStatus;
+}
+
+const { status } = Astro.props;
+const t = useTranslations(getLangFromUrl(Astro.url));
+---
+
+<span class={`badge badge--${status}`}>{t(`status.${status}`)}</span>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.15em 0.6em;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+    font: 500 0.75rem / 1.6 var(--font-mono);
+    white-space: nowrap;
+  }
+  .badge::before {
+    content: '';
+    width: 0.45em;
+    height: 0.45em;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .badge--completed { color: var(--mint); }
+  .badge--in-progress { color: var(--violet-bright); }
+  .badge--in-progress::before { animation: pulse 1.8s ease-in-out infinite; }
+  .badge--planned { color: var(--magenta); }
+  .badge--planned::before { background: transparent; border: 1px solid currentColor; }
+
+  @keyframes pulse {
+    50% { opacity: 0.3; }
+  }
+</style>

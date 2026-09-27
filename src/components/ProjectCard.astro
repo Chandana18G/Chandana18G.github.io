@@ -1,0 +1,114 @@
+---
+import StatusBadge from './StatusBadge.astro';
+import type { Project } from '@/lib/content';
+import { getLangFromUrl, localizePath, formatDate } from '@/i18n/utils';
+
+interface Props {
+  project: Project;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { project, headingLevel: Heading = 'h3' } = Astro.props;
+const { title, summary, status, tags, stack, date, image, imageAlt } = project.data;
+const lang = getLangFromUrl(Astro.url);
+const href = localizePath(`/projects/${project.id}/`, lang);
+---
+
+<article class="card" data-tilt data-tags={tags.join(',')}>
+  {image && <img class="thumb" src={image} alt={imageAlt ?? ''} loading="lazy" decoding="async" width="640" height="360" />}
+  <div class="meta">
+    <StatusBadge status={status} />
+    <time datetime={date.toISOString()} class="muted">{formatDate(date, lang)}</time>
+  </div>
+  <Heading class="title">
+    <a href={href}>{title}</a>
+  </Heading>
+  <p class="summary muted">{summary}</p>
+  {stack.length > 0 && <p class="stack">{stack.join(' · ')}</p>}
+  {tags.length > 0 && (
+    <ul class="tags" aria-label="Tags">
+      {tags.map((t) => <li class="tag">#{t}</li>)}
+    </ul>
+  )}
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-6);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: linear-gradient(160deg, rgb(26 21 40 / 0.9), rgb(17 14 26 / 0.9));
+    transform-style: preserve-3d;
+    transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease), transform 0.3s var(--ease);
+    will-change: transform;
+  }
+  .card:hover,
+  .card:focus-within {
+    border-color: rgb(139 92 246 / 0.7);
+    box-shadow: var(--glow-md);
+  }
+  /* Glare that follows the pointer (set by tilt script). */
+  .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(22rem circle at var(--mx, 50%) var(--my, 0%), rgb(199 125 255 / 0.12), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s var(--ease);
+  }
+  .card:hover::after { opacity: 1; }
+  .thumb {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+  }
+  .meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    font-size: var(--step--1);
+  }
+  .title {
+    font-size: var(--step-1);
+    transform: translateZ(24px);
+  }
+  .title a {
+    color: var(--text);
+    text-decoration: none;
+  }
+  /* Whole card is clickable via the title link. */
+  .title a::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+  }
+  .title a:focus-visible { outline: none; }
+  .card:has(.title a:focus-visible) {
+    outline: 2px solid var(--violet-bright);
+    outline-offset: 3px;
+  }
+  .summary { font-size: 0.95rem; }
+  .stack {
+    font: 500 0.8rem / 1.5 var(--font-mono);
+    color: var(--violet-bright);
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    padding: 0;
+    margin-top: auto;
+  }
+</style>

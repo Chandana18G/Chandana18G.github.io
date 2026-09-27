@@ -1,0 +1,35 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { useTranslations, getLangFromUrl } from '@/i18n/utils';
+
+const t = useTranslations(getLangFromUrl(Astro.url));
+---
+
+<BaseLayout title={t('404.title')} noindex>
+  <section class="container nf">
+    <p class="code" aria-hidden="true">404</p>
+    <h1>{t('404.title')}</h1>
+    <p class="muted">{t('404.lede')}</p>
+    <a class="btn btn--primary" href="/">{t('404.home')}</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-4);
+    padding-block: var(--space-24);
+    text-align: center;
+  }
+  .code {
+    font: 700 clamp(5rem, 20vw, 10rem) / 1 var(--font-mono);
+    background: linear-gradient(135deg, var(--violet), var(--magenta));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 40px rgb(139 92 246 / 0.5));
+  }
+  h1 { font-size: var(--step-3); }
+  .btn { margin-top: var(--space-4); }
+</style>
