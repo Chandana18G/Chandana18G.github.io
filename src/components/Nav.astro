@@ -1,0 +1,149 @@
+---
+import MotionToggle from './MotionToggle.astro';
+import { useTranslations, getLangFromUrl, localizePath } from '@/i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const links = [
+  { href: localizePath('/', lang), label: t('nav.home') },
+  { href: localizePath('/projects/', lang), label: t('nav.projects') },
+  { href: localizePath('/about/', lang), label: t('nav.about') },
+  { href: localizePath('/notes/', lang), label: t('nav.notes') },
+  { href: localizePath('/contact/', lang), label: t('nav.contact') },
+];
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isCurrent = (href: string) => {
+  const h = href.replace(/\/$/, '') || '/';
+  return h === '/' ? path === '/' : path === h || path.startsWith(`${h}/`);
+};
+---
+
+<header class="site-header">
+  <div class="container bar">
+    <a class="logo" href={localizePath('/', lang)} aria-label="Chandana — home">
+      <span class="logo-mark" aria-hidden="true">c</span><span class="logo-text">chandana<span class="dot">.</span></span>
+    </a>
+
+    <nav aria-label={t('nav.label')}>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-list">
+        <span class="visually-hidden">{t('nav.menu')}</span>
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+        </svg>
+      </button>
+      <ul id="nav-list" class="nav-list">
+        {links.map((l) => (
+          <li>
+            <a href={l.href} aria-current={isCurrent(l.href) ? 'page' : undefined}>{l.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <MotionToggle />
+  </div>
+</header>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('.menu-btn');
+  const list = document.getElementById('nav-list');
+  const setOpen = (open: boolean) => {
+    btn?.setAttribute('aria-expanded', String(open));
+    list?.classList.toggle('open', open);
+  };
+  btn?.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && btn?.getAttribute('aria-expanded') === 'true') {
+      setOpen(false);
+      btn.focus();
+    }
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgb(7 6 11 / 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgb(42 34 64 / 0.6);
+  }
+  .bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    min-height: 4rem;
+  }
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--text);
+    text-decoration: none;
+    font: 600 1.05rem / 1 var(--font-display);
+  }
+  .logo-mark {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9px;
+    background: linear-gradient(135deg, #6d3fe0, var(--neon));
+    color: #fff;
+    font-family: var(--font-mono);
+    box-shadow: var(--glow-sm);
+  }
+  .dot { color: var(--neon); }
+  nav { margin-left: auto; }
+  .nav-list {
+    display: flex;
+    gap: var(--space-1);
+    list-style: none;
+    padding: 0;
+  }
+  .nav-list a {
+    display: block;
+    padding: 0.45rem 0.8rem;
+    border-radius: 999px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  .nav-list a:hover { color: var(--text); background: var(--surface-2); }
+  .nav-list a[aria-current='page'] {
+    color: var(--text);
+    background: rgb(139 92 246 / 0.16);
+    box-shadow: inset 0 0 0 1px rgb(139 92 246 / 0.4);
+  }
+  .menu-btn {
+    display: none;
+    padding: 0.4rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  @media (max-width: 760px) {
+    nav { order: 3; margin-left: 0; }
+    .bar > :global(.motion-toggle) { margin-left: auto; }
+    .menu-btn { display: inline-flex; }
+    .nav-list {
+      display: none;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      flex-direction: column;
+      padding: var(--space-2) var(--gutter) var(--space-4);
+      background: rgb(7 6 11 / 0.97);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-list.open { display: flex; }
+    .nav-list a { padding: 0.75rem 0.8rem; font-size: 1rem; }
+  }
+</style>

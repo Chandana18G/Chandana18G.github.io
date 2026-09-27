@@ -1,0 +1,54 @@
+/* Design tokens — the single source of truth for colour, type and spacing.
+   Keep hex values in sync with the table in CLAUDE.md. */
+:root {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --bg: #07060b;
+  --surface: #110e1a;
+  --surface-2: #1a1528;
+  --border: #2a2240;
+
+  /* Text */
+  --text: #ece8f5;
+  --text-muted: #a59dbb;
+
+  /* Accents */
+  --violet: #8b5cf6;
+  --violet-bright: #b794ff;
+  --neon: #c77dff;
+  --magenta: #e879f9;
+  --mint: #5eead4;
+
+  /* Glows */
+  --glow-sm: 0 0 0 1px rgb(139 92 246 / 0.35), 0 0 18px rgb(139 92 246 / 0.18);
+  --glow-md: 0 0 0 1px rgb(183 148 255 / 0.45), 0 0 36px rgb(139 92 246 / 0.28);
+
+  /* Type */
+  --font-display: 'Space Grotesk Variable', system-ui, sans-serif;
+  --font-body: 'Inter Variable', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.1rem);
+  --step-1: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --step-2: clamp(1.6rem, 1.4rem + 1vw, 2.1rem);
+  --step-3: clamp(2.1rem, 1.7rem + 2vw, 3.2rem);
+  --step-4: clamp(2.6rem, 2rem + 3.2vw, 4.4rem);
+
+  /* Space & shape */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --radius: 14px;
+  --radius-sm: 8px;
+  --max-w: 72rem;
+  --gutter: clamp(1rem, 4vw, 2rem);
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}

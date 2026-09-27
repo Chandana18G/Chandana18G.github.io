@@ -1,0 +1,63 @@
+---
+import { useTranslations, getLangFromUrl } from '@/i18n/utils';
+const t = useTranslations(getLangFromUrl(Astro.url));
+---
+
+<button
+  class="motion-toggle"
+  type="button"
+  aria-pressed="false"
+  data-label-pause={t('motion.pause')}
+  data-label-play={t('motion.play')}
+>
+  <svg class="icon-pause" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+    <rect x="3" y="2" width="3.5" height="12" rx="1" fill="currentColor"></rect>
+    <rect x="9.5" y="2" width="3.5" height="12" rx="1" fill="currentColor"></rect>
+  </svg>
+  <svg class="icon-play" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+    <path d="M4 2.5v11a.8.8 0 0 0 1.2.7l9-5.5a.8.8 0 0 0 0-1.4l-9-5.5A.8.8 0 0 0 4 2.5Z" fill="currentColor"></path>
+  </svg>
+  <span class="label">{t('motion.pause')}</span>
+</button>
+
+<script>
+  import { isMotionPaused, setMotionPaused, onMotionChange } from '@/lib/motion';
+
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.motion-toggle');
+  const render = () => {
+    const paused = isMotionPaused();
+    buttons.forEach((btn) => {
+      // aria-pressed=true means "motion is paused"; the visible label names the next action.
+      btn.setAttribute('aria-pressed', String(paused));
+      const label = btn.querySelector('.label');
+      if (label) label.textContent = (paused ? btn.dataset.labelPlay : btn.dataset.labelPause) ?? '';
+    });
+  };
+  buttons.forEach((btn) => btn.addEventListener('click', () => setMotionPaused(!isMotionPaused())));
+  onMotionChange(render);
+  render();
+</script>
+
+<style>
+  .motion-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text-muted);
+    font: 500 0.8rem / 1 var(--font-mono);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .motion-toggle:hover { color: var(--text); border-color: var(--violet); }
+  .icon-play { display: none; }
+  .motion-toggle[aria-pressed='true'] .icon-pause { display: none; }
+  .motion-toggle[aria-pressed='true'] .icon-play { display: block; color: var(--mint); }
+
+  @media (max-width: 380px) {
+    .label { display: none; }
+  }
+</style>
