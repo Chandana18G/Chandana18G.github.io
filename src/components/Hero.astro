@@ -1,4 +1,5 @@
 ---
+import Object3D from './Object3D.astro';
 import { useTranslations, getLangFromUrl, localizePath } from '@/i18n/utils';
 import { profile } from '@/data/profile';
 
@@ -6,32 +7,8 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<section class="hero" aria-labelledby="hero-title">
-  <div class="visual" aria-hidden="true">
-    <!-- Static fallback; the WebGL scene is mounted over it when supported. -->
-    <svg class="fallback" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <radialGradient id="hero-glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0" stop-color="#8b5cf6" stop-opacity=".45"></stop>
-          <stop offset="1" stop-color="#8b5cf6" stop-opacity="0"></stop>
-        </radialGradient>
-      </defs>
-      <circle cx="200" cy="200" r="190" fill="url(#hero-glow)"></circle>
-      <g stroke="#b794ff" stroke-opacity=".35" stroke-width="1">
-        <path d="M90 170 L160 120 L240 140 L310 110 M160 120 L200 210 L240 140 M90 170 L130 250 L200 210 L280 230 L310 110 M130 250 L210 300 L280 230 M200 210 L210 300 M280 230 L330 280"></path>
-      </g>
-      <g fill="#c77dff">
-        <circle cx="90" cy="170" r="4"></circle><circle cx="160" cy="120" r="5"></circle>
-        <circle cx="240" cy="140" r="4"></circle><circle cx="310" cy="110" r="3"></circle>
-        <circle cx="200" cy="210" r="7" fill="#ece8f5"></circle><circle cx="130" cy="250" r="4"></circle>
-        <circle cx="280" cy="230" r="5"></circle><circle cx="210" cy="300" r="4"></circle>
-        <circle cx="330" cy="280" r="3"></circle>
-      </g>
-    </svg>
-    <div class="scene" data-hero-scene></div>
-  </div>
-
-  <div class="container copy">
+<section class="hero container" aria-labelledby="hero-title">
+  <div class="copy">
     <p class="eyebrow">{t('home.eyebrow')}</p>
     <h1 id="hero-title">
       {t('home.greeting')} <span class="name">{profile.shortName}.</span>
@@ -42,66 +19,19 @@ const t = useTranslations(lang);
       <a class="btn" href={localizePath('/contact/', lang)}>{t('home.cta.contact')}</a>
     </div>
   </div>
+  <Object3D variant="sphere" size="clamp(160px, 30vw, 340px)" class="hero-object" />
 </section>
-
-<script>
-  import { isMotionPaused, onMotionChange } from '@/lib/motion';
-  import { canRunHero3D } from '@/lib/hero/capability';
-
-  const container = document.querySelector<HTMLElement>('[data-hero-scene]');
-  const hero = container?.closest<HTMLElement>('.hero');
-
-  async function mount() {
-    if (!container || !hero || !canRunHero3D()) return;
-    try {
-      const { createHero } = await import('@/lib/hero/scene');
-      const handle = createHero(container, { paused: isMotionPaused() });
-      hero.classList.add('is-3d');
-      onMotionChange((paused) => handle.setPaused(paused));
-    } catch (err) {
-      // Keep the static fallback if WebGL setup fails.
-      console.warn('Hero 3D unavailable:', err);
-    }
-  }
-
-  // Load Three.js only after the page has loaded and the browser is idle.
-  const whenIdle = (cb: () => void) =>
-    'requestIdleCallback' in window ? requestIdleCallback(cb, { timeout: 2500 }) : setTimeout(cb, 1200);
-  if (document.readyState === 'complete') whenIdle(mount);
-  else window.addEventListener('load', () => whenIdle(mount), { once: true });
-</script>
 
 <style>
   .hero {
-    position: relative;
-    min-height: min(88dvh, 52rem);
     display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    overflow: hidden;
-    isolation: isolate;
+    gap: var(--space-12);
+    padding-block: var(--space-24) var(--space-16);
   }
-  .visual {
-    position: absolute;
-    inset: 0 0 0 46%;
-    z-index: -1;
-    /* Fade the left edge so the graph never competes with the text. */
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 18%);
-    mask-image: linear-gradient(to right, transparent, #000 18%);
-  }
-  .fallback,
-  .scene {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-  .fallback { transition: opacity 1s var(--ease); }
-  .scene { opacity: 0; transition: opacity 1.2s var(--ease); }
-  .hero:global(.is-3d) .scene { opacity: 1; }
-  .hero:global(.is-3d) .fallback { opacity: 0; }
-  .copy { padding-block: var(--space-16); }
   .copy > * { max-width: 38rem; }
-  .copy > .lede { max-width: 33rem; }
+  .copy > .lede { max-width: 34rem; }
   h1 { margin-top: var(--space-3); }
   .name {
     background: linear-gradient(90deg, var(--violet-bright), var(--neon), var(--magenta));
@@ -123,10 +53,12 @@ const t = useTranslations(lang);
     margin-top: var(--space-8);
   }
 
-  @media (max-width: 860px) {
-    .visual { inset: 0; opacity: 0.3; -webkit-mask-image: none; mask-image: none; }
-    .hero { min-height: auto; }
-    /* Keep text readable over the visual. */
-    .copy { text-shadow: 0 2px 16px rgb(7 6 11 / 0.9); }
+  @media (max-width: 760px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+      padding-top: var(--space-12);
+    }
+    .hero :global(.hero-object) { order: -1; justify-self: center; }
   }
 </style>

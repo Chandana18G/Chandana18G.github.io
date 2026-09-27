@@ -2,6 +2,7 @@
 import { render } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import StatusBadge from '@/components/StatusBadge.astro';
+import Object3D from '@/components/Object3D.astro';
 import { getProjects, type Project } from '@/lib/content';
 import { isSet } from '@/data/profile';
 import { useTranslations, getLangFromUrl, localizePath, formatDate } from '@/i18n/utils';
@@ -26,17 +27,20 @@ const t = useTranslations(lang);
   <article class="container detail">
     <a class="back" href={localizePath('/projects/', lang)}>← {t('projects.back')}</a>
 
-    <header>
-      <div class="meta">
-        <StatusBadge status={status} />
-        <time datetime={date.toISOString()} class="muted">{formatDate(date, lang)}</time>
+    <header class="head">
+      <div class="head-text">
+        <div class="meta">
+          <StatusBadge status={status} />
+          <time datetime={date.toISOString()} class="muted">{formatDate(date, lang)}</time>
+        </div>
+        <h1>{title}</h1>
+        <p class="lede muted">{summary}</p>
+        <div class="links">
+          {isSet(github) && <a class="btn btn--primary" href={github}>{t('projects.code')} ↗</a>}
+          {demo && isSet(demo) && <a class="btn" href={demo}>{t('projects.demo')} ↗</a>}
+        </div>
       </div>
-      <h1>{title}</h1>
-      <p class="lede muted">{summary}</p>
-      <div class="links">
-        {isSet(github) && <a class="btn btn--primary" href={github}>{t('projects.code')} ↗</a>}
-        {demo && isSet(demo) && <a class="btn" href={demo}>{t('projects.demo')} ↗</a>}
-      </div>
+      <Object3D variant="knot" size="clamp(120px, 18vw, 190px)" />
     </header>
 
     {image && <img class="hero-img" src={image} alt={imageAlt ?? ''} width="1200" height="675" />}
@@ -73,7 +77,14 @@ const t = useTranslations(lang);
     font: 500 var(--step--1) / 1 var(--font-mono);
     text-decoration: none;
   }
-  header { margin-top: var(--space-8); max-width: 48rem; }
+  .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+    margin-top: var(--space-8);
+  }
+  .head-text { max-width: 48rem; min-width: 0; }
   .meta {
     display: flex;
     gap: var(--space-4);
@@ -113,6 +124,9 @@ const t = useTranslations(lang);
   .tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
   .tags a { text-decoration: none; }
   .tags a:hover { color: var(--text); border-color: var(--violet); }
+  @media (max-width: 560px) {
+    .head { flex-direction: column-reverse; align-items: flex-start; gap: var(--space-4); }
+  }
   @media (max-width: 860px) {
     .layout { grid-template-columns: 1fr; }
     aside { order: -1; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); }

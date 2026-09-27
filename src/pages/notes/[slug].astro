@@ -1,6 +1,7 @@
 ---
 import { render } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Object3D from '@/components/Object3D.astro';
 import { getNotes, type Note } from '@/lib/content';
 import { useTranslations, getLangFromUrl, localizePath, formatDate } from '@/i18n/utils';
 
@@ -22,12 +23,15 @@ const t = useTranslations(lang);
 <BaseLayout title={note.data.title} description={note.data.summary} type="article">
   <article class="container note">
     <a class="back" href={localizePath('/notes/', lang)}>← {t('notes.back')}</a>
-    <header>
-      <time datetime={note.data.date.toISOString()} class="muted">{formatDate(note.data.date, lang)}</time>
-      <h1>{note.data.title}</h1>
-      {note.data.tags.length > 0 && (
-        <ul class="tags">{note.data.tags.map((tag) => <li class="tag">#{tag}</li>)}</ul>
-      )}
+    <header class="head">
+      <div class="head-text">
+        <time datetime={note.data.date.toISOString()} class="muted">{formatDate(note.data.date, lang)}</time>
+        <h1>{note.data.title}</h1>
+        {note.data.tags.length > 0 && (
+          <ul class="tags">{note.data.tags.map((tag) => <li class="tag">#{tag}</li>)}</ul>
+        )}
+      </div>
+      <Object3D variant="helix" size="clamp(110px, 16vw, 170px)" />
     </header>
     <div class="prose">
       <Content />
@@ -38,7 +42,17 @@ const t = useTranslations(lang);
 <style>
   .note { padding-top: var(--space-12); }
   .back { font: 500 var(--step--1) / 1 var(--font-mono); text-decoration: none; }
-  header { margin-block: var(--space-8) var(--space-12); max-width: 48rem; }
+  .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+    margin-block: var(--space-8) var(--space-12);
+  }
+  .head-text { max-width: 48rem; min-width: 0; }
+  @media (max-width: 560px) {
+    .head { flex-direction: column-reverse; align-items: flex-start; gap: var(--space-4); }
+  }
   time { font: 500 var(--step--1) / 1 var(--font-mono); }
   h1 { margin-top: var(--space-3); font-size: var(--step-3); }
   .tags { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; padding: 0; margin-top: var(--space-4); }

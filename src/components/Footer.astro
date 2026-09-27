@@ -1,4 +1,5 @@
 ---
+import Object3D from './Object3D.astro';
 import { profile, isSet } from '@/data/profile';
 import { useTranslations, getLangFromUrl } from '@/i18n/utils';
 
@@ -8,7 +9,10 @@ const year = new Date().getFullYear();
 
 <footer class="site-footer">
   <div class="container inner">
-    <p class="muted">© {year} {profile.name}. {t('footer.built')}</p>
+    <div class="brand">
+      <Object3D variant="orbit" size="84px" />
+      <p class="muted">© {year} {profile.name}. {t('footer.built')}</p>
+    </div>
     <ul class="links">
       <li><a href={`mailto:${profile.email}`}>{t('contact.email')}</a></li>
       <li><a href={profile.github} rel="me">{t('contact.github')}</a></li>
@@ -31,6 +35,11 @@ const year = new Date().getFullYear();
     align-items: center;
     justify-content: space-between;
     gap: var(--space-4);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
   }
   .links {
     display: flex;
