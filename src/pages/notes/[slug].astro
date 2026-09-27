@@ -1,0 +1,45 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getNotes, type Note } from '@/lib/content';
+import { useTranslations, getLangFromUrl, localizePath, formatDate } from '@/i18n/utils';
+
+export async function getStaticPaths() {
+  const notes = await getNotes();
+  return notes.map((note) => ({ params: { slug: note.id }, props: { note } }));
+}
+
+interface Props {
+  note: Note;
+}
+
+const { note } = Astro.props;
+const { Content } = await render(note);
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<BaseLayout title={note.data.title} description={note.data.summary} type="article">
+  <article class="container note">
+    <a class="back" href={localizePath('/notes/', lang)}>← {t('notes.back')}</a>
+    <header>
+      <time datetime={note.data.date.toISOString()} class="muted">{formatDate(note.data.date, lang)}</time>
+      <h1>{note.data.title}</h1>
+      {note.data.tags.length > 0 && (
+        <ul class="tags">{note.data.tags.map((tag) => <li class="tag">#{tag}</li>)}</ul>
+      )}
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .note { padding-top: var(--space-12); }
+  .back { font: 500 var(--step--1) / 1 var(--font-mono); text-decoration: none; }
+  header { margin-block: var(--space-8) var(--space-12); max-width: 48rem; }
+  time { font: 500 var(--step--1) / 1 var(--font-mono); }
+  h1 { margin-top: var(--space-3); font-size: var(--step-3); }
+  .tags { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; padding: 0; margin-top: var(--space-4); }
+</style>

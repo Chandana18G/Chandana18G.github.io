@@ -1,0 +1,71 @@
+---
+import type { Note } from '@/lib/content';
+import { getLangFromUrl, localizePath, formatDate } from '@/i18n/utils';
+
+interface Props {
+  notes: Note[];
+  emptyText: string;
+}
+
+const { notes, emptyText } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+---
+
+{notes.length === 0 ? (
+  <p class="empty muted">{emptyText}</p>
+) : (
+  <ol class="timeline">
+    {notes.map((n) => (
+      <li>
+        <time datetime={n.data.date.toISOString()}>{formatDate(n.data.date, lang)}</time>
+        <div>
+          <h3><a href={localizePath(`/notes/${n.id}/`, lang)}>{n.data.title}</a></h3>
+          <p class="muted">{n.data.summary}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+)}
+
+<style>
+  .timeline {
+    list-style: none;
+    padding: 0;
+    border-left: 1px solid var(--border);
+    margin-left: 0.4rem;
+  }
+  .timeline li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: var(--space-4);
+    padding: 0 0 var(--space-8) var(--space-6);
+  }
+  .timeline li::before {
+    content: '';
+    position: absolute;
+    left: -0.4rem;
+    top: 0.45rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--violet);
+    box-shadow: 0 0 12px rgb(139 92 246 / 0.6);
+  }
+  time {
+    font: 500 var(--step--1) / 1.9 var(--font-mono);
+    color: var(--text-muted);
+  }
+  h3 { font-size: var(--step-1); }
+  h3 a { color: var(--text); text-decoration: none; }
+  h3 a:hover { color: var(--violet-bright); text-decoration: underline; }
+  .empty {
+    padding: var(--space-6);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+  }
+  @media (max-width: 560px) {
+    .timeline li { grid-template-columns: 1fr; gap: 0; }
+  }
+</style>

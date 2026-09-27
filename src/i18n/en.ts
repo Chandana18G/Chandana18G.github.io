@@ -21,7 +21,7 @@ export const en = {
   'footer.source': 'Source',
 
   'home.eyebrow': 'hello, world',
-  'home.title': "Hi, I'm Chandana.",
+  'home.greeting': "Hi, I'm",
   'home.lede':
     'I study Applied Data Science & AI in Munich and build forecasting models, retrieval-augmented assistants and dashboards that people actually use. Currently looking for a 6-month internship (Pflichtpraktikum) or a working-student role in Germany or Europe.',
   'home.cta.projects': 'See projects',
@@ -41,7 +41,7 @@ export const en = {
   'glance.seeking': 'seeking',
   'glance.roleValue': 'M.Sc. Applied Data Science & AI @ SRH University',
   'glance.focusValue': 'time-series forecasting · RAG / GenAI · BI',
-  'glance.stackValue': 'Python · SQL · PyTorch · LangChain · Power BI',
+  'glance.stackValue': 'Python · SQL · pandas · scikit-learn · LangChain · Power BI',
   'glance.basedValue': 'Regensburg, DE',
   'glance.seekingValue': 'internship · working student',
 

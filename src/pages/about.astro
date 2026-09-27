@@ -1,0 +1,112 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import { bio, education, skills } from '@/data/about';
+import { profile } from '@/data/profile';
+import { useTranslations, getLangFromUrl } from '@/i18n/utils';
+
+const t = useTranslations(getLangFromUrl(Astro.url));
+---
+
+<BaseLayout
+  title={t('about.title')}
+  description="About Chandana: M.Sc. Applied Data Science & AI student at SRH University, based in Regensburg, Germany. Education, skills and languages."
+>
+  <PageHeader eyebrow="// about" title={t('about.title')} />
+
+  <div class="container">
+    <section class="bio prose">
+      {bio.map((p) => <p>{p}</p>)}
+    </section>
+
+    <section class="section" aria-labelledby="edu-title">
+      <h2 id="edu-title">{t('about.education')}</h2>
+      <ol class="edu">
+        {education.map((e) => (
+          <li class:list={{ current: e.current }}>
+            <p class="period">{e.period}</p>
+            <h3>{e.degree}</h3>
+            <p class="muted">{e.school} · {e.location}</p>
+            {e.details && !e.details.startsWith('TODO') && <p class="details">{e.details}</p>}
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="section two-col">
+      <div aria-labelledby="skills-title">
+        <h2 id="skills-title">{t('about.skills')}</h2>
+        <dl class="skills">
+          {skills.map((g) => (
+            <div>
+              <dt>{g.label}</dt>
+              <dd>
+                <ul>{g.items.map((s) => <li class="tag">{s}</li>)}</ul>
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <div aria-labelledby="lang-title">
+        <h2 id="lang-title">{t('about.languages')}</h2>
+        <ul class="langs">
+          {profile.languages.map((l) => (
+            <li><span>{l.name}</span><span class="level">{l.level}</span></li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .bio { font-size: var(--step-1); line-height: 1.6; color: var(--text); }
+  h2 { margin-bottom: var(--space-8); }
+  .edu {
+    list-style: none;
+    padding: 0;
+    border-left: 1px solid var(--border);
+    margin-left: 0.4rem;
+    display: grid;
+    gap: var(--space-8);
+  }
+  .edu li { position: relative; padding-left: var(--space-8); }
+  .edu li::before {
+    content: '';
+    position: absolute;
+    left: -0.4rem;
+    top: 0.3rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--violet);
+  }
+  .edu li.current::before {
+    background: var(--violet);
+    box-shadow: 0 0 14px rgb(139 92 246 / 0.8);
+  }
+  .period { font: 500 var(--step--1) / 1.6 var(--font-mono); color: var(--neon); }
+  .edu h3 { margin-block: var(--space-1); }
+  .details { margin-top: var(--space-2); }
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: var(--space-12);
+  }
+  .skills { display: grid; gap: var(--space-6); }
+  .skills dt { font: 500 var(--step--1) / 1 var(--font-mono); color: var(--text-muted); margin-bottom: var(--space-3); }
+  .skills ul { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; padding: 0; }
+  .skills .tag { color: var(--text); font-size: 0.85rem; }
+  .langs { list-style: none; padding: 0; }
+  .langs li {
+    display: flex;
+    justify-content: space-between;
+    padding-block: var(--space-3);
+    border-bottom: 1px solid var(--border);
+  }
+  .level { font-family: var(--font-mono); color: var(--mint); }
+  @media (max-width: 760px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>

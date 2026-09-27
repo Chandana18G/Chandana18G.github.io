@@ -1,0 +1,120 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import StatusBadge from '@/components/StatusBadge.astro';
+import { getProjects, type Project } from '@/lib/content';
+import { isSet } from '@/data/profile';
+import { useTranslations, getLangFromUrl, localizePath, formatDate } from '@/i18n/utils';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const { title, summary, status, date, tags, stack, github, demo, image, imageAlt } = project.data;
+const { Content } = await render(project);
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<BaseLayout title={title} description={summary} image={image} type="article">
+  <article class="container detail">
+    <a class="back" href={localizePath('/projects/', lang)}>← {t('projects.back')}</a>
+
+    <header>
+      <div class="meta">
+        <StatusBadge status={status} />
+        <time datetime={date.toISOString()} class="muted">{formatDate(date, lang)}</time>
+      </div>
+      <h1>{title}</h1>
+      <p class="lede muted">{summary}</p>
+      <div class="links">
+        {isSet(github) && <a class="btn btn--primary" href={github}>{t('projects.code')} ↗</a>}
+        {demo && isSet(demo) && <a class="btn" href={demo}>{t('projects.demo')} ↗</a>}
+      </div>
+    </header>
+
+    {image && <img class="hero-img" src={image} alt={imageAlt ?? ''} width="1200" height="675" />}
+
+    <div class="layout">
+      <div class="prose">
+        <Content />
+      </div>
+      <aside>
+        {stack.length > 0 && (
+          <section>
+            <h2>{t('projects.stack')}</h2>
+            <ul class="stack">{stack.map((s) => <li>{s}</li>)}</ul>
+          </section>
+        )}
+        {tags.length > 0 && (
+          <section>
+            <h2>{t('projects.tags')}</h2>
+            <ul class="tags">
+              {tags.map((tag) => (
+                <li><a class="tag" href={`${localizePath('/projects/', lang)}?tag=${encodeURIComponent(tag)}`}>#{tag}</a></li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </aside>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .detail { padding-top: var(--space-12); }
+  .back {
+    font: 500 var(--step--1) / 1 var(--font-mono);
+    text-decoration: none;
+  }
+  header { margin-top: var(--space-8); max-width: 48rem; }
+  .meta {
+    display: flex;
+    gap: var(--space-4);
+    align-items: center;
+    font-size: var(--step--1);
+  }
+  h1 { margin-top: var(--space-4); font-size: var(--step-3); }
+  .lede { margin-top: var(--space-4); font-size: var(--step-1); line-height: 1.5; }
+  .links { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+  .hero-img {
+    width: 100%;
+    height: auto;
+    margin-top: var(--space-8);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 16rem;
+    gap: var(--space-12);
+    margin-top: var(--space-12);
+  }
+  aside { display: grid; gap: var(--space-8); align-content: start; }
+  aside h2 {
+    font: 500 var(--step--1) / 1 var(--font-mono);
+    color: var(--neon);
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+    margin-bottom: var(--space-3);
+  }
+  .stack, .tags { list-style: none; padding: 0; }
+  .stack li {
+    padding-block: var(--space-2);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.95rem;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .tags a { text-decoration: none; }
+  .tags a:hover { color: var(--text); border-color: var(--violet); }
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+    aside { order: -1; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); }
+  }
+</style>

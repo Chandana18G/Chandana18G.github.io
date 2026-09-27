@@ -1,10 +1,77 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import GlanceCard from '@/components/GlanceCard.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import NoteList from '@/components/NoteList.astro';
+import { getFeaturedProjects, getNotes } from '@/lib/content';
+import { useTranslations, getLangFromUrl, localizePath } from '@/i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const featured = await getFeaturedProjects(3);
+const notes = (await getNotes()).slice(0, 3);
 ---
 
 <BaseLayout>
-  <section class="container section">
-    <p class="eyebrow">hello, world</p>
-    <h1>Hi, I'm Chandana.</h1>
+  <Hero />
+
+  <section class="container section intro">
+    <GlanceCard />
+    <div class="intro-text">
+      <p class="eyebrow">// what I do</p>
+      <h2>Data science that ends in a decision.</h2>
+      <p class="muted">
+        My projects so far cover energy and health-tech forecasting, retrieval-augmented generation,
+        responsible generative AI for insurance, and business-intelligence dashboards. I enjoy the whole
+        path, from messy public data to a model or tool someone can actually use.
+      </p>
+      <a href={localizePath('/about/', lang)}>More about me →</a>
+    </div>
+  </section>
+
+  <section class="container section" aria-labelledby="featured-title">
+    <div class="section-head">
+      <h2 id="featured-title">{t('home.featured')}</h2>
+      <a href={localizePath('/projects/', lang)}>{t('home.allProjects')} →</a>
+    </div>
+    <div class="grid">
+      {featured.map((p) => <ProjectCard project={p} />)}
+    </div>
+  </section>
+
+  <section class="container section" aria-labelledby="notes-title">
+    <div class="section-head">
+      <h2 id="notes-title">{t('home.notes')}</h2>
+      {notes.length > 0 && <a href={localizePath('/notes/', lang)}>{t('home.allNotes')} →</a>}
+    </div>
+    <NoteList notes={notes} emptyText={t('home.noNotes')} />
   </section>
 </BaseLayout>
+
+<style>
+  .intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-12);
+    align-items: center;
+  }
+  .intro-text > * + * { margin-top: var(--space-4); }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+    gap: var(--space-6);
+    perspective: 1000px;
+  }
+  @media (max-width: 860px) {
+    .intro { grid-template-columns: 1fr; gap: var(--space-8); }
+  }
+</style>

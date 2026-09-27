@@ -1,0 +1,101 @@
+---
+import { useTranslations, getLangFromUrl, localizePath } from '@/i18n/utils';
+import { profile } from '@/data/profile';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="visual" aria-hidden="true">
+    <!-- Static fallback; the WebGL scene is mounted over it when supported. -->
+    <svg class="fallback" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <radialGradient id="hero-glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0" stop-color="#8b5cf6" stop-opacity=".45"></stop>
+          <stop offset="1" stop-color="#8b5cf6" stop-opacity="0"></stop>
+        </radialGradient>
+      </defs>
+      <circle cx="200" cy="200" r="190" fill="url(#hero-glow)"></circle>
+      <g stroke="#b794ff" stroke-opacity=".35" stroke-width="1">
+        <path d="M90 170 L160 120 L240 140 L310 110 M160 120 L200 210 L240 140 M90 170 L130 250 L200 210 L280 230 L310 110 M130 250 L210 300 L280 230 M200 210 L210 300 M280 230 L330 280"></path>
+      </g>
+      <g fill="#c77dff">
+        <circle cx="90" cy="170" r="4"></circle><circle cx="160" cy="120" r="5"></circle>
+        <circle cx="240" cy="140" r="4"></circle><circle cx="310" cy="110" r="3"></circle>
+        <circle cx="200" cy="210" r="7" fill="#ece8f5"></circle><circle cx="130" cy="250" r="4"></circle>
+        <circle cx="280" cy="230" r="5"></circle><circle cx="210" cy="300" r="4"></circle>
+        <circle cx="330" cy="280" r="3"></circle>
+      </g>
+    </svg>
+    <div class="scene" data-hero-scene></div>
+  </div>
+
+  <div class="container copy">
+    <p class="eyebrow">{t('home.eyebrow')}</p>
+    <h1 id="hero-title">
+      {t('home.greeting')} <span class="name">{profile.shortName}.</span>
+    </h1>
+    <p class="lede">{t('home.lede')}</p>
+    <div class="ctas">
+      <a class="btn btn--primary" href={localizePath('/projects/', lang)}>{t('home.cta.projects')} →</a>
+      <a class="btn" href={localizePath('/contact/', lang)}>{t('home.cta.contact')}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: min(88dvh, 52rem);
+    display: grid;
+    align-items: center;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .visual {
+    position: absolute;
+    inset: 0 0 0 38%;
+    z-index: -1;
+  }
+  .fallback,
+  .scene {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .fallback { transition: opacity 1s var(--ease); }
+  .scene { opacity: 0; transition: opacity 1.2s var(--ease); }
+  .hero:global(.is-3d) .scene { opacity: 1; }
+  .hero:global(.is-3d) .fallback { opacity: 0; }
+  .copy { padding-block: var(--space-16); }
+  .copy > * { max-width: 38rem; }
+  h1 { margin-top: var(--space-3); }
+  .name {
+    background: linear-gradient(90deg, var(--violet-bright), var(--neon), var(--magenta));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 24px rgb(199 125 255 / 0.35));
+  }
+  .lede {
+    margin-top: var(--space-6);
+    font-size: var(--step-1);
+    line-height: 1.55;
+    color: var(--text-muted);
+  }
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+  }
+
+  @media (max-width: 860px) {
+    .visual { inset: 0; opacity: 0.45; }
+    .hero { min-height: auto; }
+    /* Keep text readable over the visual. */
+    .copy { text-shadow: 0 2px 16px rgb(7 6 11 / 0.9); }
+  }
+</style>

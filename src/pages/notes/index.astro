@@ -1,0 +1,22 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import NoteList from '@/components/NoteList.astro';
+import { getNotes } from '@/lib/content';
+import { useTranslations, getLangFromUrl } from '@/i18n/utils';
+
+const t = useTranslations(getLangFromUrl(Astro.url));
+const notes = await getNotes();
+---
+
+<BaseLayout title={t('notes.title')} description={t('notes.lede')}>
+  <PageHeader eyebrow="// notes" title={t('notes.title')} lede={t('notes.lede')} />
+  <section class="container">
+    <NoteList notes={notes} emptyText={t('notes.empty')} />
+    <p class="rss"><a href="/rss.xml">RSS feed</a></p>
+  </section>
+</BaseLayout>
+
+<style>
+  .rss { margin-top: var(--space-8); font: 500 var(--step--1) / 1 var(--font-mono); }
+</style>

@@ -1,0 +1,98 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import { getProjects, collectTags } from '@/lib/content';
+import { useTranslations, getLangFromUrl } from '@/i18n/utils';
+
+const t = useTranslations(getLangFromUrl(Astro.url));
+const projects = await getProjects();
+const tags = collectTags(projects);
+---
+
+<BaseLayout title={t('projects.title')} description={t('projects.lede')}>
+  <PageHeader eyebrow="// projects" title={t('projects.title')} lede={t('projects.lede')} />
+
+  <section class="container">
+    <div class="filter" role="group" aria-label={t('projects.filter')} hidden>
+      <button type="button" class="chip" data-tag="" aria-pressed="true">{t('projects.all')}</button>
+      {tags.map((tag) => (
+        <button type="button" class="chip" data-tag={tag} aria-pressed="false">#{tag}</button>
+      ))}
+    </div>
+    <p class="visually-hidden" role="status" aria-live="polite" data-filter-status></p>
+
+    <div class="grid" data-project-grid>
+      {projects.map((p) => <ProjectCard project={p} headingLevel="h2" />)}
+    </div>
+    <p class="empty muted" data-empty hidden>{t('projects.empty')}</p>
+  </section>
+</BaseLayout>
+
+<script>
+  // Progressive enhancement: without JS every project is visible.
+  const filter = document.querySelector<HTMLElement>('.filter');
+  const chips = [...document.querySelectorAll<HTMLButtonElement>('.chip')];
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-project-grid] > [data-tags]')];
+  const status = document.querySelector<HTMLElement>('[data-filter-status]');
+  const empty = document.querySelector<HTMLElement>('[data-empty]');
+
+  function apply(tag: string, updateUrl = true) {
+    let shown = 0;
+    for (const card of cards) {
+      const match = !tag || (card.dataset.tags ?? '').split(',').includes(tag);
+      card.hidden = !match;
+      if (match) shown++;
+    }
+    chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.tag === tag)));
+    if (empty) empty.hidden = shown > 0;
+    if (status) status.textContent = `${shown} project${shown === 1 ? '' : 's'} shown`;
+    if (updateUrl) {
+      const url = new URL(location.href);
+      if (tag) url.searchParams.set('tag', tag);
+      else url.searchParams.delete('tag');
+      history.replaceState(null, '', url);
+    }
+  }
+
+  if (filter) {
+    filter.hidden = false;
+    chips.forEach((c) => c.addEventListener('click', () => apply(c.dataset.tag ?? '')));
+    const initial = new URL(location.href).searchParams.get('tag') ?? '';
+    if (initial && chips.some((c) => c.dataset.tag === initial)) apply(initial, false);
+  }
+</script>
+
+<style>
+  .filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-8);
+  }
+  .chip {
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text-muted);
+    font: 500 0.82rem / 1.2 var(--font-mono);
+    cursor: pointer;
+    transition: border-color 0.2s var(--ease), color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  }
+  .chip:hover { color: var(--text); border-color: var(--violet); }
+  .chip[aria-pressed='true'] {
+    color: #fff;
+    background: rgb(139 92 246 / 0.28);
+    border-color: var(--violet);
+    box-shadow: var(--glow-sm);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+    gap: var(--space-6);
+    perspective: 1000px;
+  }
+  .grid > :global([hidden]) { display: none; }
+  .empty { padding-block: var(--space-8); }
+</style>
