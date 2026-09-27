@@ -1,0 +1,49 @@
+---
+import '@/styles/global.css';
+import SEO from '@/components/SEO.astro';
+import Nav from '@/components/Nav.astro';
+import Footer from '@/components/Footer.astro';
+import { useTranslations, getLangFromUrl } from '@/i18n/utils';
+
+interface Props {
+  /** Page title; " · Chandana" is appended unless it is the home page. */
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const { title, description = t('site.description'), image, type, noindex } = Astro.props;
+const fullTitle = title ? `${title} · Chandana` : t('site.title');
+---
+
+<!doctype html>
+<html lang={lang} data-motion="running">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <!-- Set motion state before first paint (see src/lib/motion.ts). -->
+    <script is:inline>
+      (function () {
+        var stored = null;
+        try { stored = localStorage.getItem('motion'); } catch (e) {}
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        document.documentElement.dataset.motion = stored || (reduce ? 'paused' : 'running');
+      })();
+    </script>
+    <SEO title={fullTitle} description={description} image={image} type={type} noindex={noindex} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t('skip')}</a>
+    <Nav />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

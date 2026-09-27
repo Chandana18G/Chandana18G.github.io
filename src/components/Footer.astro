@@ -1,0 +1,44 @@
+---
+import { profile, isSet } from '@/data/profile';
+import { useTranslations, getLangFromUrl } from '@/i18n/utils';
+
+const t = useTranslations(getLangFromUrl(Astro.url));
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container inner">
+    <p class="muted">© {year} {profile.name}. {t('footer.built')}</p>
+    <ul class="links">
+      <li><a href={`mailto:${profile.email}`}>{t('contact.email')}</a></li>
+      <li><a href={profile.github} rel="me">{t('contact.github')}</a></li>
+      {isSet(profile.linkedin) && <li><a href={profile.linkedin} rel="me">{t('contact.linkedin')}</a></li>}
+      <li><a href="https://github.com/Chandana18G/Chandana18G.github.io">{t('footer.source')}</a></li>
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: var(--space-16);
+    border-top: 1px solid var(--border);
+    padding-block: var(--space-8);
+    font-size: var(--step--1);
+  }
+  .inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    list-style: none;
+    padding: 0;
+  }
+  .links a { color: var(--text-muted); text-decoration: none; }
+  .links a:hover { color: var(--violet-bright); text-decoration: underline; }
+</style>
