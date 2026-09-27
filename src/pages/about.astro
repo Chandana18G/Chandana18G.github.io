@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import ExperienceList from '@/components/ExperienceList.astro';
+import Portrait from '@/components/Portrait.astro';
 import { bio, education, skills } from '@/data/about';
 import { profile } from '@/data/profile';
 import { useTranslations, getLangFromUrl } from '@/i18n/utils';
@@ -16,8 +17,11 @@ const t = useTranslations(getLangFromUrl(Astro.url));
   <PageHeader eyebrow="// about" title={t('about.title')} />
 
   <div class="container">
-    <section class="bio prose">
-      {bio.map((p) => <p>{p}</p>)}
+    <section class="intro">
+      <div class="bio prose">
+        {bio.map((p) => <p>{p}</p>)}
+      </div>
+      <Portrait size="clamp(160px, 22vw, 260px)" />
     </section>
 
     <section class="section" aria-labelledby="xp-title">
@@ -66,7 +70,16 @@ const t = useTranslations(getLangFromUrl(Astro.url));
 </BaseLayout>
 
 <style>
+  .intro {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-12);
+  }
   .bio { font-size: var(--step-1); line-height: 1.6; color: var(--text); }
+  @media (max-width: 760px) {
+    .intro { flex-direction: column-reverse; gap: var(--space-8); }
+  }
   h2 { margin-bottom: var(--space-8); }
   .edu {
     list-style: none;

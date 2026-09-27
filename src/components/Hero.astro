@@ -1,5 +1,6 @@
 ---
 import { useTranslations, getLangFromUrl, localizePath } from '@/i18n/utils';
+import Portrait from './Portrait.astro';
 import { profile, isSet } from '@/data/profile';
 
 const lang = getLangFromUrl(Astro.url);
@@ -25,14 +26,17 @@ const t = useTranslations(lang);
       <li><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
     </ul>
   </div>
+  <Portrait size="clamp(150px, 26vw, 300px)" priority class="hero-photo" />
 </section>
 
 <style>
   .hero {
     padding-block: var(--space-16);
     min-height: min(78dvh, 46rem);
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
+    gap: var(--space-12);
   }
   .copy > * { max-width: 40rem; }
   .available {
@@ -96,6 +100,12 @@ const t = useTranslations(lang);
   .quick-links a:hover { color: var(--violet-bright); }
 
   @media (max-width: 760px) {
-    .hero { min-height: auto; padding-top: var(--space-12); }
+    .hero {
+      min-height: auto;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+      padding-top: var(--space-8);
+    }
+    .hero :global(.hero-photo) { order: -1; }
   }
 </style>
