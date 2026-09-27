@@ -6,7 +6,7 @@ const t = useTranslations(getLangFromUrl(Astro.url));
 <button
   class="motion-toggle"
   type="button"
-  aria-pressed="false"
+  data-paused="false"
   data-label-pause={t('motion.pause')}
   data-label-play={t('motion.play')}
 >
@@ -27,8 +27,8 @@ const t = useTranslations(getLangFromUrl(Astro.url));
   const render = () => {
     const paused = isMotionPaused();
     buttons.forEach((btn) => {
-      // aria-pressed=true means "motion is paused"; the visible label names the next action.
-      btn.setAttribute('aria-pressed', String(paused));
+      // The label names the next action, so aria-pressed is deliberately not used.
+      btn.dataset.paused = String(paused);
       const label = btn.querySelector('.label');
       if (label) label.textContent = (paused ? btn.dataset.labelPlay : btn.dataset.labelPause) ?? '';
     });
@@ -54,10 +54,11 @@ const t = useTranslations(getLangFromUrl(Astro.url));
   }
   .motion-toggle:hover { color: var(--text); border-color: var(--violet); }
   .icon-play { display: none; }
-  .motion-toggle[aria-pressed='true'] .icon-pause { display: none; }
-  .motion-toggle[aria-pressed='true'] .icon-play { display: block; color: var(--mint); }
+  .motion-toggle[data-paused="true"] .icon-pause { display: none; }
+  .motion-toggle[data-paused="true"] .icon-play { display: block; color: var(--mint); }
 
   @media (max-width: 380px) {
-    .label { display: none; }
+    /* Icon-only on tiny screens; label stays available to screen readers. */
+    .label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   }
 </style>

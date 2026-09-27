@@ -32,6 +32,11 @@ const href = localizePath(`/projects/${project.id}/`, lang);
   )}
 </article>
 
+<script>
+  import { initTilt } from '@/lib/tilt';
+  initTilt();
+</script>
+
 <style>
   .card {
     position: relative;
@@ -80,7 +85,6 @@ const href = localizePath(`/projects/${project.id}/`, lang);
   }
   .title {
     font-size: var(--step-1);
-    transform: translateZ(24px);
   }
   .title a {
     color: var(--text);
