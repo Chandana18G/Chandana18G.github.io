@@ -17,16 +17,6 @@ export interface ExperienceItem {
 
 export const experience: ExperienceItem[] = [
   {
-    role: 'Operations Associate (part-time)',
-    company: 'Flink SE',
-    location: 'Germany',
-    period: '2024 – 2025',
-    points: [
-      'Order fulfilment and goods receipt (delivery checks, sorting, inventory records) in a fast-paced quick-commerce team.',
-      'Reliable shift work alongside studies, meeting daily order and delivery targets.',
-    ],
-  },
-  {
     role: 'Data Science Intern',
     company: 'TechnoTut',
     location: 'Mysuru, India',
