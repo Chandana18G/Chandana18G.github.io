@@ -18,6 +18,7 @@ in one AskUserQuestion round where possible (free-text answers are fine via "Oth
   (list them with `grep -h "^tags:" src/content/projects/*.md`)
 - **GitHub URL** (or TODO) and optional **demo URL**
 - **Date**: completion date, or start/target date for in-progress/planned work
+- **Key results**: up to 3 short chips for `highlights` (only real numbers from the repo or the user)
 - **Featured on the home page?** If yes and there are already 3 featured projects, ask which
   one to un-feature.
 
@@ -34,7 +35,8 @@ Do not invent metrics, results or dataset details that are not in the README; le
 - Slug: kebab-case of the title (short, no dates), e.g. `smard-price-forecasting`.
   Check that `src/content/projects/<slug>.md` does not already exist.
 - Frontmatter exactly per CLAUDE.md (`title, date, status, summary, tags, stack, github,
-  demo?, image?, imageAlt?, featured`).
+  demo?, image?, imageAlt?, highlights, featured, draft`). Set `draft: true` if any section is
+  still a TODO, so placeholders never reach the live site.
 - Body sections: `## Problem`, `## Data`, `## Approach`, `## Results`, `## What I learned`
   (for planned projects use `## Planned scope` and `## Open questions` instead of the last two).
 - If the user provides an image, put it in `public/images/projects/<slug>.<ext>`, set

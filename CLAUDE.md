@@ -61,6 +61,13 @@ src/
 
 Import alias: `@/` → `src/`.
 
+## Content rules
+
+- **Never publish placeholder text.** A project with TODOs must have `draft: true`.
+- **Never invent results.** Numbers in `highlights`/Results must come from the linked repo
+  or from the user. When unsure, leave it out.
+- Experience, education and skills live in `src/data/about.ts`; the CV link in `src/data/profile.ts`.
+
 ## Content schema
 
 ### Projects — `src/content/projects/<slug>.md`
@@ -77,7 +84,9 @@ github: https://github.com/Chandana18G/repo     # required: a URL or the literal
 demo: https://example.com                       # optional: URL or TODO
 image: /images/projects/<slug>.png              # optional: file in public/images/projects/
 imageAlt: "Describe the image"                  # required if image is set
+highlights: ["91.2% test accuracy", "P@5 0.844"]  # max 3 short, factual result chips (≤40 chars)
 featured: true            # up to 3 featured projects appear on the home page
+draft: false              # true = hidden on the live site (visible in npm run dev)
 ---
 
 ## Problem
@@ -135,7 +144,8 @@ Glows: `--glow-sm`, `--glow-md`. Body text on `--bg` must stay ≥ 4.5:1 contras
   `object` prop (default `icosa`). Current mapping: home hero `sphere`, projects `icosa`,
   project detail `knot`, notes `knot`, note detail `helix`, about `helix`, contact `sphere`,
   404 `icosa`, footer `orbit`.
-- Each object renders a static SVG first. After `load` + idle, `canRun3D()` (no WebGL,
+- Each object renders a static SVG first. After `load`, on the first interaction (or 4 s),
+  objects are mounted one at a time as they come near the viewport. `canRun3D()` (no WebGL,
   Save-Data, <4 GB memory or <4 cores → keep the SVG) gates a dynamic import of
   `lib/three/objects.ts`, which mounts a small renderer per object. Each loop runs only while
   that object is on-screen, the tab is visible and motion is not paused; when paused it renders

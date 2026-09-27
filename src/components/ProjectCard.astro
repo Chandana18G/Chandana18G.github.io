@@ -9,7 +9,7 @@ interface Props {
 }
 
 const { project, headingLevel: Heading = 'h3' } = Astro.props;
-const { title, summary, status, tags, stack, date, image, imageAlt } = project.data;
+const { title, summary, status, tags, stack, date, image, imageAlt, highlights } = project.data;
 const lang = getLangFromUrl(Astro.url);
 const href = localizePath(`/projects/${project.id}/`, lang);
 ---
@@ -24,6 +24,11 @@ const href = localizePath(`/projects/${project.id}/`, lang);
     <a href={href}>{title}</a>
   </Heading>
   <p class="summary muted">{summary}</p>
+  {highlights.length > 0 && (
+    <ul class="highlights" aria-label="Key results">
+      {highlights.map((h) => <li>{h}</li>)}
+    </ul>
+  )}
   {stack.length > 0 && <p class="stack">{stack.join(' · ')}</p>}
   {tags.length > 0 && (
     <ul class="tags" aria-label="Tags">
@@ -103,6 +108,21 @@ const href = localizePath(`/projects/${project.id}/`, lang);
     outline-offset: 3px;
   }
   .summary { font-size: 0.95rem; }
+  .highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    padding: 0;
+  }
+  .highlights li {
+    padding: 0.2em 0.65em;
+    border-radius: 6px;
+    background: rgb(94 234 212 / 0.08);
+    border: 1px solid rgb(94 234 212 / 0.3);
+    color: var(--mint);
+    font: 600 0.78rem / 1.5 var(--font-mono);
+  }
   .stack {
     font: 500 0.8rem / 1.5 var(--font-mono);
     color: var(--violet-bright);

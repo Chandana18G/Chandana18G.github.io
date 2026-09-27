@@ -6,7 +6,8 @@ summary: "TODO: Forecasting German day-ahead electricity prices from SMARD marke
 tags: [energy, time-series, forecasting]
 stack: [Python, pandas, scikit-learn]
 github: TODO
-featured: true
+featured: false
+draft: true # hidden on the live site until the TODOs are filled in
 ---
 
 ## Problem

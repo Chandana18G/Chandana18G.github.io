@@ -17,7 +17,7 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, summary, status, date, tags, stack, github, demo, image, imageAlt } = project.data;
+const { title, summary, status, date, tags, stack, github, demo, image, imageAlt, highlights } = project.data;
 const { Content } = await render(project);
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -35,6 +35,11 @@ const t = useTranslations(lang);
         </div>
         <h1>{title}</h1>
         <p class="lede muted">{summary}</p>
+        {highlights.length > 0 && (
+          <ul class="highlights" aria-label={t('projects.results')}>
+            {highlights.map((h) => <li>{h}</li>)}
+          </ul>
+        )}
         <div class="links">
           {isSet(github) && <a class="btn btn--primary" href={github}>{t('projects.code')} ↗</a>}
           {demo && isSet(demo) && <a class="btn" href={demo}>{t('projects.demo')} ↗</a>}
@@ -93,6 +98,22 @@ const t = useTranslations(lang);
   }
   h1 { margin-top: var(--space-4); font-size: var(--step-3); }
   .lede { margin-top: var(--space-4); font-size: var(--step-1); line-height: 1.5; }
+  .highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+    list-style: none;
+    padding: 0;
+  }
+  .highlights li {
+    padding: 0.25em 0.75em;
+    border-radius: 6px;
+    background: rgb(94 234 212 / 0.08);
+    border: 1px solid rgb(94 234 212 / 0.3);
+    color: var(--mint);
+    font: 600 0.85rem / 1.5 var(--font-mono);
+  }
   .links { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
   .hero-img {
     width: 100%;

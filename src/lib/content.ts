@@ -6,9 +6,12 @@ export type Note = CollectionEntry<'notes'>;
 
 const statusRank: Record<ProjectStatus, number> = { 'in-progress': 0, completed: 1, planned: 2 };
 
+/** Drafts are shown while developing locally, never in the production build. */
+const visible = (draft: boolean) => import.meta.env.DEV || !draft;
+
 /** All projects: in-progress first, then completed, then planned; newest first within each. */
 export async function getProjects(): Promise<Project[]> {
-  const all = await getCollection('projects');
+  const all = await getCollection('projects', ({ data }) => visible(data.draft));
   return all.sort(
     (a, b) =>
       statusRank[a.data.status] - statusRank[b.data.status] ||
@@ -22,7 +25,7 @@ export async function getFeaturedProjects(limit = 3): Promise<Project[]> {
 
 /** Published notes (drafts excluded), newest first. */
 export async function getNotes(): Promise<Note[]> {
-  const all = await getCollection('notes', ({ data }) => !data.draft);
+  const all = await getCollection('notes', ({ data }) => visible(data.draft));
   return all.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }
 

@@ -24,7 +24,11 @@ const projects = defineCollection({
     /** Path under /public, e.g. "/images/projects/smard.png". */
     image: z.string().startsWith('/').optional(),
     imageAlt: z.string().optional(),
+    /** Up to 3 short, factual result chips shown on the card, e.g. "91.2% accuracy". */
+    highlights: z.array(z.string().max(40)).max(3).default([]),
     featured: z.boolean().default(false),
+    /** Drafts are hidden on the live site (still visible in `npm run dev`). */
+    draft: z.boolean().default(false),
   }),
 });
 
