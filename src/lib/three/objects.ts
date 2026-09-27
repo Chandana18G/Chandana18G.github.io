@@ -1,8 +1,8 @@
-// Small, self-contained 3D objects used across the site (see Object3D.astro).
-// Each mount gets its own tiny renderer; its loop runs only while the object is
-// on-screen, the tab is visible and motion is not paused. When paused it shows
-// a single still frame. This module is dynamically imported, so Three.js never
-// lands in the initial bundle.
+// 3D objects drawn in the fixed page background (see Background3D.astro).
+// One full-viewport renderer per page holds two objects that drift with scroll
+// and lean toward the pointer. The loop runs only while the tab is visible and
+// motion is not paused; when paused a single still frame is shown. This module
+// is dynamically imported, so Three.js never lands in the initial bundle.
 
 import {
   AdditiveBlending,
@@ -27,7 +27,7 @@ import {
 export const VARIANTS = ['sphere', 'icosa', 'knot', 'helix', 'orbit'] as const;
 export type Variant = (typeof VARIANTS)[number];
 
-export interface ObjectHandle {
+export interface BackgroundHandle {
   setPaused(paused: boolean): void;
   dispose(): void;
 }
@@ -46,7 +46,7 @@ const pointVertex = /* glsl */ `
   void main() {
     vec4 mv = modelViewMatrix * vec4(position, 1.0);
     vDepth = clamp((-mv.z - 2.5) / 3.0, 0.0, 1.0);
-    gl_PointSize = size * uPixelRatio * (4.0 / -mv.z);
+    gl_PointSize = size * uPixelRatio * (9.0 / -mv.z);
     gl_Position = projectionMatrix * mv;
   }
 `;
@@ -299,88 +299,98 @@ const builders: Record<Variant, (pr: number) => Built> = {
   orbit: buildOrbit,
 };
 
-// ----- Pointer (shared by all mounts) ------------------------------------------------
+// ----- Background mount ---------------------------------------------------------------
 
-const pointer = { x: 0, y: 0, active: false };
-let pointerBound = false;
-function bindPointer() {
-  if (pointerBound) return;
-  pointerBound = true;
-  window.addEventListener(
-    'pointermove',
-    (e) => {
-      pointer.x = e.clientX;
-      pointer.y = e.clientY;
-      pointer.active = e.pointerType === 'mouse';
-    },
-    { passive: true },
-  );
-  document.addEventListener('pointerleave', () => (pointer.active = false));
-}
+/**
+ * Screen placement for each slot, as fractions of the viewport. `y` moves from `from` to `to`
+ * as the page scrolls top → bottom, so the two objects cross paths while reading.
+ */
+const SLOTS = [
+  { x: 0.8, from: 0.3, to: 0.72, size: 0.55, spin: 1 },
+  { x: 0.14, from: 0.82, to: 0.3, size: 0.36, spin: -1 },
+] as const;
 
-// ----- Mount ---------------------------------------------------------------------------
-
-export function mountObject(container: HTMLElement, variant: Variant, opts: { paused: boolean }): ObjectHandle {
-  bindPointer();
-
+export function mountBackground(
+  container: HTMLElement,
+  variants: readonly Variant[],
+  opts: { paused: boolean },
+): BackgroundHandle {
   const renderer = new WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'low-power' });
-  const pr = Math.min(window.devicePixelRatio, 1.75);
+  const pr = Math.min(window.devicePixelRatio, 1.5);
   renderer.setPixelRatio(pr);
   renderer.setClearColor(0x000000, 0);
   container.appendChild(renderer.domElement);
 
   const scene = new Scene();
-  const camera = new PerspectiveCamera(35, 1, 0.1, 20);
-  camera.position.set(0, 0, 4.4);
+  const camera = new PerspectiveCamera(35, 1, 0.1, 40);
+  camera.position.set(0, 0, 10);
 
-  const built = builders[variant](pr);
-  // Outer group follows the pointer; inner group does its own animation.
-  const tilt = new Group();
-  tilt.add(built.group);
-  scene.add(tilt);
+  const items = variants.slice(0, SLOTS.length).map((variant, i) => {
+    const built = builders[variant](pr);
+    const holder = new Group(); // position, scale, pointer lean
+    holder.add(built.group);
+    scene.add(holder);
+    return { built, holder, slot: SLOTS[i] };
+  });
 
-  let time = 0;
-  let tx = 0, ty = 0;
-  function update(dt: number) {
+  // Viewport ↔ world conversion at z = 0.
+  let vw = 1, vh = 1, worldH = 1;
+  const resize = () => {
+    vw = window.innerWidth;
+    vh = window.innerHeight;
+    renderer.setSize(vw, vh, false);
+    camera.aspect = vw / vh;
+    camera.updateProjectionMatrix();
+    worldH = 2 * camera.position.z * Math.tan((camera.fov * Math.PI) / 360);
+    if (paused) frame(0);
+  };
+
+  const pointer = { x: 0.5, y: 0.5, active: false };
+  const onPointer = (e: PointerEvent) => {
+    pointer.x = e.clientX / vw;
+    pointer.y = e.clientY / vh;
+    pointer.active = e.pointerType === 'mouse';
+  };
+  window.addEventListener('pointermove', onPointer, { passive: true });
+  window.addEventListener('resize', resize, { passive: true });
+
+  let time = 1.2; // start slightly into the animation so the still frame looks composed
+  let lx = 0, ly = 0;
+
+  function frame(dt: number) {
     time += dt;
-    // Lean toward the pointer, relative to this object's own centre.
-    let gx = 0, gy = 0;
-    if (pointer.active) {
-      const r = container.getBoundingClientRect();
-      gx = Math.max(-1, Math.min(1, (pointer.x - (r.left + r.width / 2)) / window.innerWidth));
-      gy = Math.max(-1, Math.min(1, (pointer.y - (r.top + r.height / 2)) / window.innerHeight));
+    const maxScroll = Math.max(1, document.documentElement.scrollHeight - vh);
+    const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+    const worldW = worldH * camera.aspect;
+    const minSide = Math.min(vw, vh);
+
+    const tx = pointer.active ? pointer.x - 0.5 : 0;
+    const ty = pointer.active ? pointer.y - 0.5 : 0;
+    lx += (tx - lx) * Math.min(1, dt * 2 || 1);
+    ly += (ty - ly) * Math.min(1, dt * 2 || 1);
+
+    for (const { built, holder, slot } of items) {
+      const sy = slot.from + (slot.to - slot.from) * progress;
+      holder.position.set((slot.x - 0.5) * worldW, (0.5 - sy) * worldH, 0);
+      // Each object's radius is ~1.2 world units; scale it to the slot's share of the viewport.
+      const px = minSide * slot.size;
+      holder.scale.setScalar(((px / vh) * worldH) / 2.4);
+      holder.rotation.set(ly * 0.5 + progress * 1.2 * slot.spin, lx * 0.7 + progress * 2 * slot.spin, 0);
+      built.update(time);
     }
-    tx += (gx - tx) * Math.min(1, dt * 3);
-    ty += (gy - ty) * Math.min(1, dt * 3);
-    tilt.rotation.set(ty * 0.6, tx * 0.8, 0);
-    built.update(time);
+    renderer.render(scene, camera);
   }
 
-  const render = () => renderer.render(scene, camera);
-
-  const resize = () => {
-    const { clientWidth: w, clientHeight: h } = container;
-    if (!w || !h) return;
-    renderer.setSize(w, h, false);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-    if (paused) render();
-  };
-  const ro = new ResizeObserver(resize);
-  ro.observe(container);
-
   let paused = opts.paused;
-  let visible = false;
   let raf = 0;
   let last = 0;
   const loop = (now: number) => {
-    update(Math.min(0.05, (now - last) / 1000 || 0.016));
+    frame(Math.min(0.05, (now - last) / 1000 || 0.016));
     last = now;
-    render();
     raf = requestAnimationFrame(loop);
   };
   const sync = () => {
-    const run = !paused && visible && !document.hidden;
+    const run = !paused && !document.hidden;
     if (run && !raf) {
       last = performance.now();
       raf = requestAnimationFrame(loop);
@@ -389,28 +399,28 @@ export function mountObject(container: HTMLElement, variant: Variant, opts: { pa
       raf = 0;
     }
   };
-  const io = new IntersectionObserver(([entry]) => {
-    visible = entry.isIntersecting;
-    sync();
-  });
-  io.observe(container);
+  // While paused, still follow scroll so the objects stay where the reader expects them.
+  const onScroll = () => {
+    if (paused) frame(0);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
   document.addEventListener('visibilitychange', sync);
 
   resize();
-  update(1.2); // start slightly into the animation so the still frame looks composed
-  render();
+  frame(0);
   sync();
 
   return {
     setPaused(p) {
       paused = p;
-      if (p) render();
+      if (p) frame(0);
       sync();
     },
     dispose() {
       cancelAnimationFrame(raf);
-      ro.disconnect();
-      io.disconnect();
+      window.removeEventListener('pointermove', onPointer);
+      window.removeEventListener('resize', resize);
+      window.removeEventListener('scroll', onScroll);
       document.removeEventListener('visibilitychange', sync);
       scene.traverse((obj) => {
         const o = obj as { geometry?: BufferGeometry; material?: Material };

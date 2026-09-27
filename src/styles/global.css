@@ -28,7 +28,8 @@ body {
   overflow-x: hidden;
 }
 
-main { flex: 1; }
+/* Content sits above the fixed 3D background (Background3D.astro, z-index 0). */
+main { flex: 1; position: relative; z-index: 1; }
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);

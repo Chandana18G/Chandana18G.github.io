@@ -1,14 +1,12 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import Object3D from '@/components/Object3D.astro';
 import { useTranslations, getLangFromUrl } from '@/i18n/utils';
 
 const t = useTranslations(getLangFromUrl(Astro.url));
 ---
 
-<BaseLayout title={t('404.title')} noindex>
+<BaseLayout scene={['icosa', 'orbit']} title={t('404.title')} noindex>
   <section class="container nf">
-    <Object3D variant="icosa" size="clamp(140px, 30vw, 200px)" />
     <p class="code" aria-hidden="true">404</p>
     <h1>{t('404.title')}</h1>
     <p class="muted">{t('404.lede')}</p>
