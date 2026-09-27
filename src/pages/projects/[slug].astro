@@ -2,7 +2,6 @@
 import { render } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import StatusBadge from '@/components/StatusBadge.astro';
-import Object3D from '@/components/Object3D.astro';
 import { getProjects, type Project } from '@/lib/content';
 import { isSet } from '@/data/profile';
 import { useTranslations, getLangFromUrl, localizePath, formatDate } from '@/i18n/utils';
@@ -23,7 +22,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<BaseLayout title={title} description={summary} image={image} type="article">
+<BaseLayout scene={['knot', 'orbit']} title={title} description={summary} image={image} type="article">
   <article class="container detail">
     <a class="back" href={localizePath('/projects/', lang)}>← {t('projects.back')}</a>
 
@@ -45,7 +44,6 @@ const t = useTranslations(lang);
           {demo && isSet(demo) && <a class="btn" href={demo}>{t('projects.demo')} ↗</a>}
         </div>
       </div>
-      <Object3D variant="knot" size="clamp(120px, 18vw, 190px)" />
     </header>
 
     {image && <img class="hero-img" src={image} alt={imageAlt ?? ''} width="1200" height="675" />}

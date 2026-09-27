@@ -1,16 +1,11 @@
 ---
-import Object3D from './Object3D.astro';
-import type { Variant } from '@/lib/three/objects';
-
 interface Props {
   eyebrow?: string;
   title: string;
   lede?: string;
-  /** Decorative 3D object shown beside the title. */
-  object?: Variant;
 }
 
-const { eyebrow, title, lede, object = 'icosa' } = Astro.props;
+const { eyebrow, title, lede } = Astro.props;
 ---
 
 <header class="page-header container">
@@ -20,15 +15,10 @@ const { eyebrow, title, lede, object = 'icosa' } = Astro.props;
     {lede && <p class="lede muted">{lede}</p>}
     <slot />
   </div>
-  <Object3D variant={object} size="clamp(120px, 18vw, 190px)" />
 </header>
 
 <style>
   .page-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-8);
     padding-top: var(--space-12);
     padding-bottom: var(--space-8);
   }
@@ -46,8 +36,5 @@ const { eyebrow, title, lede, object = 'icosa' } = Astro.props;
     max-width: 60ch;
     font-size: var(--step-1);
     line-height: 1.5;
-  }
-  @media (max-width: 560px) {
-    .page-header { flex-direction: column-reverse; align-items: flex-start; gap: var(--space-4); }
   }
 </style>

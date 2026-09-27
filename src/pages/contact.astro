@@ -15,8 +15,8 @@ const channels = [
 ];
 ---
 
-<BaseLayout title={t('contact.title')} description={t('contact.lede')}>
-  <PageHeader object="sphere" eyebrow="// contact" title={t('contact.title')} lede={t('contact.lede')} />
+<BaseLayout scene={['sphere', 'icosa']} title={t('contact.title')} description={t('contact.lede')}>
+  <PageHeader eyebrow="// contact" title={t('contact.title')} lede={t('contact.lede')} />
   <section class="container">
     <ul class="channels">
       {channels.map((c) => (
