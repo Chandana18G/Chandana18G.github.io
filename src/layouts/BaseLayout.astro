@@ -14,13 +14,13 @@ interface Props {
   image?: string;
   type?: 'website' | 'article';
   noindex?: boolean;
-  /** The two background 3D objects for this page. */
-  scene?: readonly [Variant, Variant];
+  /** The three background 3D objects for this page: [right, left, centre]. */
+  scene?: readonly [Variant, Variant, Variant];
 }
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-const { title, description = t('site.description'), image, type, noindex, scene = ['icosa', 'orbit'] } = Astro.props;
+const { title, description = t('site.description'), image, type, noindex, scene = ['icosa', 'orbit', 'knot'] } = Astro.props;
 const fullTitle = title ? `${title} · Chandana` : t('site.title');
 ---
 
