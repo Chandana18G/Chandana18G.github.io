@@ -61,8 +61,8 @@ const og = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" vi
   <text x="80" y="300" font-family="${font}" font-size="84" font-weight="700" fill="#ece8f5">Chandana<tspan fill="url(#name)">.</tspan></text>
   <text x="80" y="370" font-family="${font}" font-size="36" fill="#a59dbb">Applied Data Science &amp; AI</text>
   <text x="80" y="420" font-family="${font}" font-size="30" fill="#a59dbb">Forecasting · RAG / GenAI · BI</text>
-  <rect x="80" y="480" width="430" height="56" rx="28" fill="#8b5cf6" fill-opacity=".18" stroke="#8b5cf6"/>
-  <text x="108" y="516" font-family="${mono}" font-size="24" fill="#ece8f5">open to internships · DE / EU</text>
+  <rect x="80" y="480" width="560" height="56" rx="28" fill="#8b5cf6" fill-opacity=".18" stroke="#8b5cf6"/>
+  <text x="108" y="516" font-family="${mono}" font-size="24" fill="#ece8f5">working student · Regensburg / remote</text>
 </svg>`;
 
 await sharp(Buffer.from(og)).png().toFile(path('og-image.png'));
