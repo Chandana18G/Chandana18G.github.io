@@ -19,7 +19,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<BaseLayout scene={['helix', 'orbit']} title={note.data.title} description={note.data.summary} type="article">
+<BaseLayout scene={['helix', 'orbit', 'sphere']} title={note.data.title} description={note.data.summary} type="article">
   <article class="container note">
     <a class="back" href={localizePath('/notes/', lang)}>← {t('notes.back')}</a>
     <header class="head">

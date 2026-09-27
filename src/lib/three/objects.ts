@@ -1,5 +1,5 @@
 // 3D objects drawn in the fixed page background (see Background3D.astro).
-// One full-viewport renderer per page holds two objects that drift with scroll
+// One full-viewport renderer per page holds three objects that drift with scroll
 // and lean toward the pointer. The loop runs only while the tab is visible and
 // motion is not paused; when paused a single still frame is shown. This module
 // is dynamically imported, so Three.js never lands in the initial bundle.
@@ -306,8 +306,9 @@ const builders: Record<Variant, (pr: number) => Built> = {
  * as the page scrolls top → bottom, so the two objects cross paths while reading.
  */
 const SLOTS = [
-  { x: 0.8, from: 0.3, to: 0.72, size: 0.55, spin: 1 },
-  { x: 0.14, from: 0.82, to: 0.3, size: 0.36, spin: -1 },
+  { x: 0.82, from: 0.26, to: 0.68, size: 0.36, spin: 1 }, // right
+  { x: 0.12, from: 0.84, to: 0.34, size: 0.26, spin: -1 }, // left
+  { x: 0.42, from: 0.6, to: 0.2, size: 0.3, spin: 1 }, // centre, behind the text column
 ] as const;
 
 export function mountBackground(
