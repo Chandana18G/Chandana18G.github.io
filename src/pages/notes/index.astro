@@ -9,8 +9,8 @@ const t = useTranslations(getLangFromUrl(Astro.url));
 const notes = await getNotes();
 ---
 
-<BaseLayout title={t('notes.title')} description={t('notes.lede')}>
-  <PageHeader object="knot" eyebrow="// notes" title={t('notes.title')} lede={t('notes.lede')} />
+<BaseLayout scene={['knot', 'icosa']} title={t('notes.title')} description={t('notes.lede')}>
+  <PageHeader eyebrow="// notes" title={t('notes.title')} lede={t('notes.lede')} />
   <section class="container">
     <NoteList notes={notes} emptyText={t('notes.empty')} />
     <p class="rss"><a href="/rss.xml">RSS feed</a></p>

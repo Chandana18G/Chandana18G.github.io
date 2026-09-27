@@ -9,11 +9,11 @@ import { useTranslations, getLangFromUrl } from '@/i18n/utils';
 const t = useTranslations(getLangFromUrl(Astro.url));
 ---
 
-<BaseLayout
+<BaseLayout scene={['helix', 'sphere']}
   title={t('about.title')}
   description="About Chandana Gurusiddappa: M.Sc. Applied Data Science & AI student at SRH University, based in Regensburg. Experience, education, skills and languages."
 >
-  <PageHeader object="helix" eyebrow="// about" title={t('about.title')} />
+  <PageHeader eyebrow="// about" title={t('about.title')} />
 
   <div class="container">
     <section class="bio prose">

@@ -1,0 +1,103 @@
+---
+// Fixed, full-page 3D background behind all content: two objects per page that
+// drift with scroll. Static SVGs show first (and stay on devices without WebGL);
+// the Three.js version fades in after the first interaction or 4 s.
+import type { Variant } from '@/lib/three/objects';
+
+interface Props {
+  /** The two objects for this page: [large top-right, smaller bottom-left]. */
+  variants: readonly [Variant, Variant];
+}
+
+const { variants } = Astro.props;
+---
+
+<div class="bg3d" data-bg3d={variants.join(',')} aria-hidden="true">
+  {[0, 1].map((i) => (
+    <svg class={`fallback slot-${i}`} viewBox="0 0 100 100">
+      <g fill="none" stroke="#b794ff" stroke-opacity=".5" stroke-width=".6">
+        <circle cx="50" cy="50" r="40"></circle>
+        <ellipse cx="50" cy="50" rx="40" ry="14"></ellipse>
+        <ellipse cx="50" cy="50" rx="14" ry="40"></ellipse>
+        <ellipse cx="50" cy="50" rx="40" ry="14" transform="rotate(55 50 50)"></ellipse>
+        <ellipse cx="50" cy="50" rx="40" ry="14" transform="rotate(-55 50 50)"></ellipse>
+      </g>
+      <g fill="#c77dff">
+        <circle cx="90" cy="50" r="1.8"></circle><circle cx="50" cy="10" r="1.8"></circle>
+        <circle cx="27" cy="83" r="1.8"></circle><circle cx="73" cy="17" r="1.8"></circle>
+        <circle cx="50" cy="50" r="2.6" fill="#f0d9ff"></circle>
+      </g>
+    </svg>
+  ))}
+</div>
+
+<script>
+  import { isMotionPaused, onMotionChange } from '@/lib/motion';
+  import { canRun3D } from '@/lib/three/capability';
+  import type { Variant } from '@/lib/three/objects';
+
+  async function mount() {
+    const layer = document.querySelector<HTMLElement>('[data-bg3d]');
+    if (!layer || layer.dataset.mounted || !canRun3D()) return;
+    layer.dataset.mounted = 'true';
+    try {
+      const { mountBackground } = await import('@/lib/three/objects');
+      const variants = (layer.dataset.bg3d ?? '').split(',') as Variant[];
+      const handle = mountBackground(layer, variants, { paused: isMotionPaused() });
+      layer.classList.add('is-3d');
+      onMotionChange((paused) => handle.setPaused(paused));
+    } catch (err) {
+      console.warn('3D background unavailable, keeping static shapes:', err);
+    }
+  }
+
+  const whenIdle = (cb: () => void) =>
+    'requestIdleCallback' in window ? requestIdleCallback(cb, { timeout: 2500 }) : setTimeout(cb, 1200);
+
+  // Start after load, on the first interaction or after 4 s (whichever comes first),
+  // so page start-up never competes with WebGL.
+  function start() {
+    let started = false;
+    const events = ['pointermove', 'pointerdown', 'scroll', 'keydown', 'touchstart'] as const;
+    const go = () => {
+      if (started) return;
+      started = true;
+      events.forEach((e) => window.removeEventListener(e, go));
+      whenIdle(mount);
+    };
+    events.forEach((e) => window.addEventListener(e, go, { once: true, passive: true }));
+    setTimeout(go, 4000);
+  }
+  if (document.readyState === 'complete') start();
+  else window.addEventListener('load', start, { once: true });
+</script>
+
+<style>
+  .bg3d {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    /* Faint enough that text always wins; objects read as part of the backdrop. */
+    opacity: 0.5;
+  }
+  .bg3d :global(canvas) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.2s var(--ease);
+  }
+  .bg3d:global(.is-3d) :global(canvas) { opacity: 1; }
+  .bg3d:global(.is-3d) .fallback { opacity: 0; }
+  .fallback {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    transition: opacity 1s var(--ease);
+  }
+  /* Same placement as the 3D slots in src/lib/three/objects.ts. */
+  .slot-0 { left: 80%; top: 30%; width: 55vmin; height: 55vmin; }
+  .slot-1 { left: 14%; top: 82%; width: 36vmin; height: 36vmin; }
+</style>

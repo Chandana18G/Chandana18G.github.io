@@ -1,5 +1,4 @@
 ---
-import Object3D from './Object3D.astro';
 import { useTranslations, getLangFromUrl, localizePath } from '@/i18n/utils';
 import { profile, isSet } from '@/data/profile';
 
@@ -26,16 +25,14 @@ const t = useTranslations(lang);
       <li><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
     </ul>
   </div>
-  <Object3D variant="sphere" size="clamp(160px, 28vw, 320px)" class="hero-object" />
 </section>
 
 <style>
   .hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-    gap: var(--space-12);
     padding-block: var(--space-16);
+    min-height: min(78dvh, 46rem);
+    display: flex;
+    align-items: center;
   }
   .copy > * { max-width: 40rem; }
   .available {
@@ -99,11 +96,6 @@ const t = useTranslations(lang);
   .quick-links a:hover { color: var(--violet-bright); }
 
   @media (max-width: 760px) {
-    .hero {
-      grid-template-columns: 1fr;
-      gap: var(--space-6);
-      padding-top: var(--space-8);
-    }
-    .hero :global(.hero-object) { order: -1; justify-self: center; }
+    .hero { min-height: auto; padding-top: var(--space-12); }
   }
 </style>
