@@ -72,6 +72,23 @@ Import alias: `@/` → `src/`.
   or from the user. When unsure, leave it out.
 - Experience, education and skills live in `src/data/about.ts`; the CV link in `src/data/profile.ts`.
 
+## Keep GitHub and the portfolio in sync
+
+Chandana wants her GitHub and this site to always match. Whenever a project repo under
+`github.com/Chandana18G` or the profile README (`Chandana18G/Chandana18G`, file `README.md`) is
+changed, make the matching change here in the same session, and the other way round:
+
+| Change on GitHub | Update here |
+| --- | --- |
+| New project repo / new project in the profile README | Add `src/content/projects/<slug>.md` (schema above) |
+| Repo renamed | Update `github:` in the project file and the link in the profile README |
+| Results, date, summary or stack changed in a repo README | Update `date`, `summary`, `stack`, `highlights` and the body |
+| New skill, experience or education in the profile README | Update `src/data/about.ts` |
+
+Projects are matched to repos by the `github:` URL in their frontmatter. After updating, run
+`npm run build`, then commit and push both repos. The content rules above still apply: copy
+numbers only from the repo or the user, and never remove a project without asking.
+
 ## Content schema
 
 ### Projects — `src/content/projects/<slug>.md`
