@@ -5,7 +5,7 @@ status: completed
 summary: "A generative-AI copilot for motor insurance claims where a person always decides: a working prototype of its safeguards, an evaluation built to find where they fail, and a Responsible AI assessment."
 tags: [genai, llm, insurance, responsible-ai, fairness]
 stack: [Python, Claude API, scikit-learn, NumPy, SciPy, matplotlib, pytest, Hypothesis]
-github: TODO # TODO: create github.com/Chandana18G/motor-claims-copilot (prepared locally), then set this URL
+github: https://github.com/Chandana18G/motor-claims-copilot
 image: /images/projects/claims-copilot/architecture.webp
 imageAlt: "Diagram of one claim's journey. Intake and an injection guard feed extraction, which feeds hybrid retrieval over the claimant's policy, a rule engine and a separate fraud indicator. These produce a cited draft from an LLM or a template, which is checked and goes to an adjuster with a signed staff token; escalated claims need a different supervisor. A keyed audit log with monitoring and kill switches records every step, and the claimant is told only a sealed human decision."
 highlights: ["AI never decides: 11/11 bypasses refused", "0 of 88 injections reached adjusters", "Hidden proxy bias: 1.6× FPR (synthetic)"]
