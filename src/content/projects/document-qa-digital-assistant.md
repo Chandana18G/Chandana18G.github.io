@@ -7,7 +7,7 @@ tags: [genai, rag, llm, nlp]
 stack: [Python, sentence-transformers, FAISS, Streamlit, OpenAI API, FLAN-T5]
 github: https://github.com/Chandana18G/document-qa-digital-assistant
 highlights: ["End-to-end RAG pipeline", "Answers with sources", "Runs free with a local LLM"]
-featured: true
+featured: false
 ---
 
 ## Problem

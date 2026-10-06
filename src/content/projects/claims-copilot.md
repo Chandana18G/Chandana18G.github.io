@@ -9,7 +9,7 @@ github: https://github.com/Chandana18G/motor-claims-copilot
 image: /images/projects/claims-copilot/architecture.webp
 imageAlt: "Diagram of one claim's journey. Claim intake and document processing feed a generative AI draft grounded in the policy wording and a separate statistical fraud indicator. An adjuster accepts, edits or overrides the draft, with high-value or fraud-flagged claims going to a supervisor. Only the human decision reaches the claimant, and every step is written to an immutable audit log. The AI cannot approve, pay or contact the claimant."
 highlights: ["Five ethical lenses, one verdict", "Hidden proxy bias: 1.36× (synthetic)", "Override rate: no signal of harm"]
-featured: false
+featured: true
 ---
 
 ## Problem
