@@ -9,7 +9,7 @@ github: https://github.com/Chandana18G/motor-claims-copilot
 image: /images/projects/claims-copilot/architecture.webp
 imageAlt: "Diagram of one claim's journey: intake and injection guard, extraction, then hybrid retrieval, a deterministic rule engine and a separate fraud indicator feed a cited draft. Only a signed-in adjuster decides; every step goes to a keyed audit log with monitoring."
 highlights: ["0 of 88 injections changed a draft", "Unfair flagging 7.6× → 1.08×", "11/11 authority bypasses refused"]
-featured: false
+featured: true
 ---
 
 ## Problem

@@ -7,7 +7,7 @@ tags: [health-tech, signal-processing, machine-learning]
 stack: [Python]
 github: TODO # TODO: add the repo link (the Code button appears automatically)
 highlights: ["9,540 windows, 14 participants", "Leave-one-subject-out validation", "Mean F1 0.416"]
-featured: false
+featured: true
 ---
 
 ## Overview
