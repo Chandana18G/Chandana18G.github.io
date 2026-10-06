@@ -10,7 +10,7 @@ import { useTranslations, getLangFromUrl, localizePath } from '@/i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-const featured = await getFeaturedProjects(3);
+const featured = await getFeaturedProjects();
 const notes = (await getNotes()).slice(0, 3);
 ---
 

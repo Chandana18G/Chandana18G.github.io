@@ -6,7 +6,7 @@ summary: "An interactive Power BI dashboard analysing motor vehicle recall alert
 tags: [bi, dashboard, automotive]
 stack: [Power BI] # TODO: add the tools you actually used
 github: TODO # TODO: add the repo link (the Code button appears automatically)
-featured: false
+featured: true
 # TODO: add highlights: ["..."] with real results once you have them
 ---
 

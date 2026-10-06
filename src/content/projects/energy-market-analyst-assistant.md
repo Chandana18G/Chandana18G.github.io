@@ -6,7 +6,7 @@ summary: "Planned: an AI assistant that helps analysts explore and explain energ
 tags: [energy, genai, llm]
 stack: [] # TODO: add the tools you actually used
 github: TODO # TODO: add the repo link (the Code button appears automatically)
-featured: false
+featured: true
 # TODO: add highlights: ["..."] with real results once you have them
 ---
 
