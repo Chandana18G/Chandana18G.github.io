@@ -19,7 +19,8 @@ export async function getProjects(): Promise<Project[]> {
   );
 }
 
-export async function getFeaturedProjects(limit = 3): Promise<Project[]> {
+/** Featured projects in the same order as getProjects(); pass a limit to show only the first few. */
+export async function getFeaturedProjects(limit = Infinity): Promise<Project[]> {
   return (await getProjects()).filter((p) => p.data.featured).slice(0, limit);
 }
 

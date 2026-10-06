@@ -7,7 +7,7 @@ tags: [nlp, data-engineering, sql]
 stack: [Python, spaCy, DistilBERT, LDA, PostgreSQL, MongoDB, SQL]
 github: TODO # TODO: add the repo link (the Code button appears automatically)
 highlights: ["Hybrid PostgreSQL + MongoDB design", "SQL analyses per city"]
-featured: false
+featured: true
 ---
 
 ## Overview

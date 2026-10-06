@@ -6,7 +6,7 @@ summary: "Forecasting German electricity prices using public market data from SM
 tags: [energy, time-series, forecasting]
 stack: [Python] # TODO: add the tools you actually used
 github: TODO # TODO: add the repo link (the Code button appears automatically)
-featured: false
+featured: true
 # TODO: add highlights: ["..."] with real results once you have them
 ---
 

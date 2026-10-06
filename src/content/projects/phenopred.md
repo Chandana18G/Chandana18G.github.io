@@ -7,7 +7,7 @@ tags: [health-tech, genomics, data-engineering]
 stack: [Python, Streamlit]
 github: TODO # TODO: add the repo link (the Code button appears automatically)
 highlights: ["5 trait models incl. 6-SNP IrisPlex", "Says INSUFFICIENT_DATA, not guesses", "Unit + integration tests"]
-featured: false
+featured: true
 ---
 
 ## Overview
