@@ -19,8 +19,7 @@ in one AskUserQuestion round where possible (free-text answers are fine via "Oth
 - **GitHub URL** (or TODO) and optional **demo URL**
 - **Date**: completion date, or start/target date for in-progress/planned work
 - **Key results**: up to 3 short chips for `highlights` (only real numbers from the repo or the user)
-- **Featured on the home page?** If yes and there are already 3 featured projects, ask which
-  one to un-feature.
+- **Featured on the home page?** Default yes: every project is featured on the home page.
 
 ## 2. Draft the description (optional)
 

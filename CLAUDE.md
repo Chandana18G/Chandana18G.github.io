@@ -106,7 +106,7 @@ demo: https://example.com                       # optional: URL or TODO
 image: /images/projects/<slug>.png              # optional: file in public/images/projects/
 imageAlt: "Describe the image"                  # required if image is set
 highlights: ["91.2% test accuracy", "P@5 0.844"]  # max 3 short, factual result chips (≤40 chars)
-featured: true            # up to 3 featured projects appear on the home page
+featured: true            # featured projects appear on the home page (Chandana: feature all of them)
 draft: false              # true = hidden on the live site (visible in npm run dev)
 ---
 
@@ -118,7 +118,8 @@ draft: false              # true = hidden on the live site (visible in npm run d
 ```
 
 Ordering on /projects: in-progress → completed → planned, newest first within each group.
-Home page shows the first 3 `featured: true` projects in that order.
+Home page shows every `featured: true` project in that order. Chandana wants all projects
+featured, so set `featured: true` on new projects unless she says otherwise.
 
 ### Notes — `src/content/notes/<slug>.md`
 
