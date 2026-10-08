@@ -17,6 +17,7 @@ export const en = {
   'motion.pause': 'Pause motion',
   'motion.play': 'Play motion',
 
+  'footer.rights': 'All rights reserved.',
   'footer.built': 'Built with Astro and Three.js.',
   'footer.source': 'Source',
 
