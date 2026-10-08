@@ -38,7 +38,9 @@ Mean absolute error on the 62-day holdout (Dec 2021 – Jan 2022, 7-day smoothed
 | Target | Linear | Random Forest | XGBoost |
 | --- | --- | --- | --- |
 | Germany, daily deaths | 345.0 | 52.7 | **46.4** |
+| Netherlands, daily deaths | 10.4 | 9.9 | **6.3** |
 | Netherlands, ICU occupancy | 91.1 | 39.3 | **34.6** |
+| Bremen, daily deaths | 3.0 | 0.44 | **0.43** |
 | UK, daily deaths | — | **19.2** | 48.8 |
 
 - In Germany, XGBoost cut the error by **87%** compared with the linear baseline.
