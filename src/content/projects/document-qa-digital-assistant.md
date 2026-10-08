@@ -50,7 +50,7 @@ screenshot above uses a sample remote-work policy.
    numbered citations and a "Show passages" panel under each answer.
 
 The evaluation (`python -m evaluation.run_eval`) calls the same retrieval and answer code the
-app uses, so it measures the real pipeline, and **21 unit tests** run without downloading any
+app uses, so it measures the real pipeline, and **22 unit tests** run without downloading any
 model.
 
 ## Results
