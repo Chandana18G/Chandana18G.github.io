@@ -5,3 +5,7 @@ dist/
 .env.*
 .DS_Store
 npm-debug.log*
+
+# Private editing notes (kept in a private repository)
+CLAUDE.md
+.claude/
