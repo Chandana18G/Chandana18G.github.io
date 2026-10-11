@@ -6,7 +6,7 @@ export const profile = {
   origin: 'Mysuru, India',
   email: 'Chanduu4055@gmail.com',
   github: 'https://github.com/Chandana18G',
-  linkedin: 'https://www.linkedin.com/in/chandana-gurusiddappa-785563223/',
+  linkedin: 'https://www.linkedin.com/in/chandana-gurusiddappa/',
   /** Path to a CV in /public, e.g. '/Chandana-Gurusiddappa-CV.pdf'. Buttons stay hidden while 'TODO'. */
   cv: 'TODO',
   siteUrl: 'https://chandana18g.github.io',
