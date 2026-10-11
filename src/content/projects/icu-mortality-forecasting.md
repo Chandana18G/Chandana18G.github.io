@@ -7,6 +7,8 @@ tags: [health-tech, time-series, forecasting, machine-learning]
 stack: [Python, pandas, scikit-learn, XGBoost, matplotlib, seaborn]
 github: https://github.com/Chandana18G/Machine-Learning
 highlights: ["−87% MAE vs linear baseline", "4 regions, 62-day holdouts", "Time-series CV"]
+image: /images/projects/icu-mortality-forecasting/error-vs-baseline.webp
+imageAlt: "Bar chart comparing Random Forest and XGBoost errors with the linear baseline for four forecasting targets; the tree models' errors are 13% to 95% of the baseline's."
 featured: true
 ---
 
@@ -46,6 +48,11 @@ Mean absolute error on the 62-day holdout (Dec 2021 – Jan 2022, 7-day smoothed
 - In Germany, XGBoost cut the error by **87%** compared with the linear baseline.
 - **No single model wins everywhere.** In the UK, Random Forest beat XGBoost, and cross-validation
   showed XGBoost's error varied a lot between folds.
+
+<figure>
+  <img src="/images/projects/icu-mortality-forecasting/error-vs-baseline.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Bar chart of each tree model's error as a percentage of the linear baseline's error. Germany deaths: Random Forest 15%, XGBoost 13%. Bremen deaths: 15% and 14%. Netherlands ICU patients: 43% and 38%. Netherlands deaths: 95% and 61%." />
+  <figcaption>Error as a share of the linear baseline's: tree models cut it most in Germany and Bremen.</figcaption>
+</figure>
 
 ## What I learned
 
