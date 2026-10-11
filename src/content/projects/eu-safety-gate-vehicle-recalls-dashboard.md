@@ -7,7 +7,7 @@ tags: [bi, dashboard, automotive, data-quality]
 stack: [Power BI, Power Query (M), DAX, Python, pandas]
 github: https://github.com/Chandana18G/eu-safety-gate-recalls-dashboard
 image: /images/projects/eu-safety-gate-vehicle-recalls-dashboard/overview.webp
-imageAlt: "Overview page of the Power BI dashboard: KPI cards for 444 brands, 199 airbag alerts, 19.9% fire alerts and 97.9% serious risk, a column chart of alerts per year from 2016 to 2026, and a treemap of alerts by defective component."
+imageAlt: "Overview page of the Power BI dashboard: KPI cards for 4,184 alerts, 443 brands, 199 airbag alerts, 19.9% fire alerts and 97.9% serious risk, a column chart of alerts per year from 2016 to 2026, a donut of alerts by vehicle category, and a treemap of alerts by defective component."
 highlights: ["4,184 alerts, 2016–2026", "Cards match Python recount", "9 data issues found and fixed"]
 featured: true
 ---
@@ -46,7 +46,7 @@ the year comes from the alert number (`A12/0028/17` → 2017).
 | Busiest year | **2021**, 548 alerts (+16.1% on 2020) |
 | Rated "Serious risk" | **97.9%** of alerts |
 | Fire as a hazard | **19.9%** of alerts |
-| Brands | **444**; Mercedes-Benz has the most alerts (477) |
+| Brands | **443**; Mercedes-Benz has the most alerts (477) |
 | Notifying country | Germany raises **2,504** of 4,184 alerts (59.8%) |
 | Spread | each alert lists **6.27** other affected countries on average |
 | Airbag / restraint alerts | **199** |
