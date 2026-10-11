@@ -7,6 +7,8 @@ tags: [nlp, machine-learning, semantic-search]
 stack: [Python, scikit-learn, sentence-transformers, gensim, spaCy, NLTK, pandas]
 github: https://github.com/Chandana18G/nlp-news-intelligence
 highlights: ["91.2% test accuracy", "P@5 0.844 semantic search", "Labels recovered by LDA"]
+image: /images/projects/nlp-news-intelligence/trade-off.webp
+imageAlt: "Two bar charts: TF-IDF models reach 90.9 to 91.2% classification accuracy against 88.6% for Sentence-BERT, while Sentence-BERT search reaches 84.4% precision at 5 against 77.6% for TF-IDF."
 featured: true
 ---
 
@@ -39,6 +41,11 @@ four balanced categories (World, Sports, Business, Sci/Tech).
 | Logistic Regression + TF-IDF | 90.87% |
 | Logistic Regression + SBERT | 88.58% |
 
+<figure>
+  <img src="/images/projects/nlp-news-intelligence/confusion-matrix.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Confusion matrix of the SVM over four categories, 1,900 articles each. Sports is 97.9% correct, World 90.7%, Sci/Tech 89.1%, Business 86.9%; the largest confusion is Business articles predicted as Sci/Tech (8.9%)." />
+  <figcaption>Most errors are Business articles read as Sci/Tech (8.9%) and the reverse (7.3%); Sports is almost always right.</figcaption>
+</figure>
+
 **Semantic search** (Precision@5)
 
 | Method | P@5 |
@@ -49,6 +56,11 @@ four balanced categories (World, Sports, Business, Sci/Tech).
 TF-IDF breaks on vocabulary mismatch. The query *"Apple launches AI chip"* pulls in Beatles
 articles because of the word *Apple*. SBERT returns AMD, Intel and NVIDIA stories that share no
 keywords with the query but match its meaning.
+
+<figure>
+  <img src="/images/projects/nlp-news-intelligence/trade-off.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Two bar charts. Classification accuracy: LogReg plus TF-IDF 90.9%, SVM plus TF-IDF 91.2%, LogReg plus SBERT 88.6%. Semantic search precision at 5: TF-IDF 77.6%, SBERT 84.4%." />
+  <figcaption>The trade-off: classical TF-IDF wins classification, Sentence-BERT wins search.</figcaption>
+</figure>
 
 **Topic modeling:** without seeing any labels, LDA recovered the four real categories
 (e.g. *game, team, season* → Sports; *stock, oil, percent* → Business).
