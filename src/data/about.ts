@@ -31,7 +31,7 @@ export const experience: ExperienceItem[] = [
     role: 'Data Analysis Trainee',
     company: 'SPORTS-KPI',
     location: 'India',
-    period: 'Sep 2023 – Oct 2023',
+    period: 'Sep 2024 – Dec 2024',
     points: [
       'Built KPI dashboards and reports for football and kabaddi match data, from raw data to visual delivery.',
     ],
