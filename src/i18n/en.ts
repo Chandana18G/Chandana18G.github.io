@@ -26,7 +26,7 @@ export const en = {
   'home.role': 'Data Science & ML — NLP, RAG and forecasting',
   'home.greeting': "Hi, I'm",
   'home.lede':
-    'M.Sc. student at SRH University with a data-science internship behind me. I build ML systems end to end and evaluate them honestly — a news classifier at 91% accuracy, a RAG assistant that cites its sources, and COVID-19 forecasts that cut error by 87% versus a linear baseline.',
+    'M.Sc. student in Applied Data Science & AI at SRH University. I turn messy public data into models I can defend: a RAG assistant that ranks the right passage first 88% of the time and refuses to guess, electricity price forecasts with 26% lower error than the naive baseline, and a news classifier at 91% accuracy.',
   'home.cta.projects': 'See projects',
   'home.cta.contact': 'Get in touch',
   'home.cta.cv': 'Download CV',
