@@ -5,7 +5,7 @@ status: completed
 summary: "Forecasting COVID-19 ICU occupancy and deaths for the Netherlands, Germany, Bremen and the UK, comparing linear, Random Forest and XGBoost models with time-series backtesting."
 tags: [health-tech, time-series, forecasting, machine-learning]
 stack: [Python, pandas, scikit-learn, XGBoost, matplotlib, seaborn]
-github: https://github.com/Chandana18G/Machine-Learning
+github: https://github.com/Chandana18G/covid-icu-mortality-forecasting
 highlights: ["−87% MAE vs linear baseline", "4 regions, 62-day holdouts", "Time-series CV"]
 image: /images/projects/icu-mortality-forecasting/error-vs-baseline.webp
 imageAlt: "Bar chart comparing Random Forest and XGBoost errors with the linear baseline for four forecasting targets; the tree models' errors are 13% to 95% of the baseline's."
