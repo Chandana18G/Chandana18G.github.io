@@ -10,6 +10,7 @@ image: /images/projects/emg-muscle-fatigue-classification/per-subject-f1.webp
 imageAlt: "Bar chart of leave-one-subject-out F1 for 14 anonymised subjects, ranging from 0.19 to 0.77 with a mean of 0.416. A red marker per subject shows the score of always predicting fatigue, around 0.55 to 0.69; the model beats it for only one subject."
 highlights: ["9,540 windows, 14 subjects", "Leave-one-subject-out", "Mean F1 0.416 vs baseline 0.625"]
 featured: true
+order: 8
 ---
 
 ## Problem

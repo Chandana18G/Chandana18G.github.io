@@ -80,8 +80,9 @@ export interface SkillGroup {
 export const skills: SkillGroup[] = [
   { label: 'Languages', items: ['Python', 'SQL', 'Java', 'C', 'Bash'] },
   { label: 'Machine learning', items: ['scikit-learn', 'XGBoost', 'time-series forecasting', 'model evaluation & CV'] },
-  { label: 'NLP & GenAI', items: ['sentence-transformers', 'FAISS', 'RAG', 'LDA / gensim', 'spaCy', 'NLTK', 'OpenAI API'] },
-  { label: 'Data & BI', items: ['pandas', 'NumPy', 'Power BI', 'Tableau', 'matplotlib', 'seaborn', 'Excel'] },
+  { label: 'NLP & GenAI', items: ['RAG', 'hybrid retrieval (BM25 + dense)', 'sentence-transformers', 'FAISS', 'Hugging Face Transformers', 'LDA / gensim', 'spaCy', 'NLTK', 'OpenAI API'] },
+  { label: 'Data & BI', items: ['pandas', 'NumPy', 'ETL pipelines', 'Power BI', 'Power Query', 'DAX', 'Tableau', 'matplotlib', 'seaborn', 'Excel'] },
+  { label: 'Statistics & signals', items: ['SciPy', 'statsmodels', 'JASP', 'hypothesis testing', 'signal processing (sEMG)'] },
   { label: 'Databases', items: ['PostgreSQL', 'MySQL', 'SQLite', 'MongoDB'] },
   { label: 'Tools', items: ['Git', 'Docker', 'Linux', 'Jupyter', 'Streamlit'] },
 ];

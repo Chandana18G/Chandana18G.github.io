@@ -27,6 +27,8 @@ const projects = defineCollection({
     /** Up to 3 short, factual result chips shown on the card, e.g. "91.2% accuracy". */
     highlights: z.array(z.string().max(40)).max(3).default([]),
     featured: z.boolean().default(false),
+    /** Optional position on the home page and /projects (1 = first); unset projects follow, newest first. */
+    order: z.number().int().positive().optional(),
     /** Drafts are hidden on the live site (still visible in `npm run dev`). */
     draft: z.boolean().default(false),
   }),

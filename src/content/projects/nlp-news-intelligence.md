@@ -10,6 +10,7 @@ highlights: ["91.2% test accuracy", "P@5 0.844 semantic search", "Labels recover
 image: /images/projects/nlp-news-intelligence/trade-off.webp
 imageAlt: "Two bar charts: TF-IDF models reach 90.9 to 91.2% classification accuracy against 88.6% for Sentence-BERT, while Sentence-BERT search reaches 84.4% precision at 5 against 77.6% for TF-IDF."
 featured: true
+order: 3
 ---
 
 ## Problem

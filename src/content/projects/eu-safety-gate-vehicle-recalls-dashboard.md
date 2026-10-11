@@ -10,6 +10,7 @@ image: /images/projects/eu-safety-gate-vehicle-recalls-dashboard/overview.webp
 imageAlt: "Overview page of the Power BI dashboard: KPI cards for 4,184 alerts, 443 brands, 199 airbag alerts, 19.9% fire alerts and 97.9% serious risk, a column chart of alerts per year from 2016 to 2026, a donut of alerts by vehicle category, and a treemap of alerts by defective component."
 highlights: ["4,184 alerts, 2016–2026", "Cards match Python recount", "9 data issues found and fixed"]
 featured: true
+order: 6
 ---
 
 ## Problem

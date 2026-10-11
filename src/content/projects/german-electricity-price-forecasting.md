@@ -10,6 +10,7 @@ image: /images/projects/german-electricity-price-forecasting/example-week.webp
 imageAlt: "Line chart of one volatile week in September 2026: the actual hourly price, the gradient-boosting forecast and yesterday's price. The forecast follows the daily cycle and most spikes; its error that week was 36.5 EUR/MWh against 54.4 for yesterday's price."
 highlights: ["26% lower error than naive", "8,712-hour rolling backtest", "Leakage-tested features"]
 featured: true
+order: 2
 ---
 
 ## Problem

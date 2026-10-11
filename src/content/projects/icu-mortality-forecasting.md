@@ -10,6 +10,7 @@ highlights: ["−87% MAE vs linear baseline", "4 regions, 62-day holdouts", "Tim
 image: /images/projects/icu-mortality-forecasting/error-vs-baseline.webp
 imageAlt: "Bar chart comparing Random Forest and XGBoost errors with the linear baseline for four forecasting targets; the tree models' errors are 13% to 95% of the baseline's."
 featured: true
+order: 4
 ---
 
 ## Problem

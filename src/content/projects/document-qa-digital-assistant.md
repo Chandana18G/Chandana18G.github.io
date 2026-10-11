@@ -10,6 +10,7 @@ image: /images/projects/document-qa/app.webp
 imageAlt: "The Document Q&A Chatbot web app. Asked what to do if a work laptop is stolen, it answers that lost or stolen devices must be reported to the IT helpdesk within 24 hours and shows the source passage from sample.md. Asked how many weeks of parental leave, it replies that it couldn't find anything about that in the documents. The sidebar holds upload, rebuild index, answer model, temperature, passages and relevance threshold settings."
 highlights: ["Right passage ranked 1st for 88%", "Refuses 93% of off-topic questions", "3 bugs found by its own evaluation"]
 featured: true
+order: 1
 ---
 
 ## Problem

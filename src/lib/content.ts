@@ -9,12 +9,13 @@ const statusRank: Record<ProjectStatus, number> = { 'in-progress': 0, completed:
 /** Drafts are shown while developing locally, never in the production build. */
 const visible = (draft: boolean) => import.meta.env.DEV || !draft;
 
-/** All projects: in-progress first, then completed, then planned; newest first within each. */
+/** All projects: in-progress first, then completed, then planned; within each, by `order`, then newest first. */
 export async function getProjects(): Promise<Project[]> {
   const all = await getCollection('projects', ({ data }) => visible(data.draft));
   return all.sort(
     (a, b) =>
       statusRank[a.data.status] - statusRank[b.data.status] ||
+      (a.data.order ?? Infinity) - (b.data.order ?? Infinity) ||
       b.data.date.valueOf() - a.data.date.valueOf(),
   );
 }

@@ -10,6 +10,7 @@ image: /images/projects/icu-gut-transit-statistics/cover.webp
 imageAlt: "Box plots on a log scale comparing critically ill patients and healthy volunteers. Median gastric emptying is 13.9 vs 3.0 hours, small-bowel transit 6.7 vs 3.8 hours and whole-gut transit 240 vs 28.5 hours; all three differences are significant."
 highlights: ["Gastric emptying 4.5× slower", "Mann–Whitney p < .001", "Pearson vs Spearman flips a result"]
 featured: true
+order: 7
 ---
 
 ## Problem
