@@ -2,7 +2,6 @@
 // Links set to 'TODO' are hidden on the site until filled in.
 export const profile = {
   name: 'Chandana Gurusiddappa',
-  shortName: 'Chandana',
   location: 'Regensburg, Bavaria, Germany',
   origin: 'Mysuru, India',
   email: 'Chanduu4055@gmail.com',

@@ -2,7 +2,7 @@
 // Edit freely — this is plain data.
 
 export const bio: string[] = [
-  "I'm Chandana, an M.Sc. student in Applied Data Science & AI at SRH University (Munich campus), based in Regensburg, Bavaria. I grew up in Mysuru, India, where I studied computer science.",
+  "I'm Chandana Gurusiddappa, an M.Sc. student in Applied Data Science & AI at SRH University (Munich campus), based in Regensburg, Bavaria. I grew up in Mysuru, India, where I studied computer science.",
   'I build machine-learning systems end to end: from messy public data to a model that is honestly evaluated and a tool someone can use. My recent work covers NLP and semantic search, retrieval-augmented generation (RAG) and time-series forecasting.',
   "I'm looking for a working-student role (Werkstudent) in data science, machine learning or applied generative AI, in Regensburg or remote.",
 ];

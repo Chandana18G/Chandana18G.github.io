@@ -4,7 +4,7 @@ import { useTranslations, getLangFromUrl } from '@/i18n/utils';
 
 const t = useTranslations(getLangFromUrl(Astro.url));
 const rows = [
-  { key: t('glance.name'), value: profile.shortName },
+  { key: t('glance.name'), value: profile.name },
   { key: t('glance.role'), value: t('glance.roleValue') },
   { key: t('glance.focus'), value: t('glance.focusValue') },
   { key: t('glance.stack'), value: t('glance.stackValue') },

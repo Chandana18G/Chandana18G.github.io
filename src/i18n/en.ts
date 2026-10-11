@@ -1,7 +1,7 @@
 // All English UI strings. To add German, copy this file to de.ts,
 // translate the values, and register it in ./utils.ts.
 export const en = {
-  'site.title': 'Chandana — Applied Data Science & AI',
+  'site.title': 'Chandana Gurusiddappa — Applied Data Science & AI',
   'site.description':
     'Chandana Gurusiddappa — M.Sc. Applied Data Science & AI student in Germany building NLP, RAG and forecasting systems. Open to working-student roles in Regensburg or remote.',
 

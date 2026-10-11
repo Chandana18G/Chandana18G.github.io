@@ -8,7 +8,7 @@ import type { Variant } from '@/lib/three/objects';
 import { useTranslations, getLangFromUrl } from '@/i18n/utils';
 
 interface Props {
-  /** Page title; " · Chandana" is appended unless it is the home page. */
+  /** Page title; " · Chandana Gurusiddappa" is appended unless it is the home page. */
   title?: string;
   description?: string;
   image?: string;
@@ -21,7 +21,7 @@ interface Props {
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const { title, description = t('site.description'), image, type, noindex, scene = ['icosa', 'orbit', 'knot'] } = Astro.props;
-const fullTitle = title ? `${title} · Chandana` : t('site.title');
+const fullTitle = title ? `${title} · Chandana Gurusiddappa` : t('site.title');
 ---
 
 <!doctype html>
